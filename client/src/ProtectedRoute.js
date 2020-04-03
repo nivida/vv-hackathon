@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {Redirect, Route, withRouter} from 'react-router-dom'
 import {compose} from "./utils/compose";
+import {StoreContext} from "./repositories/rootRepo";
+import {observer} from "mobx-react";
 
 const ProtectedRoute = (props) => {
 
   const {component: Component, redirectPath = '/login', ...rest} = props;
-  const isAuthenticated = true;
+  const store = useContext(StoreContext);
 
   const renderRoute = (Component, props, authenticated) => {
     if (authenticated) {
@@ -18,9 +20,10 @@ const ProtectedRoute = (props) => {
     }}/>
   };
 
-  return <Route {...rest} render={props => renderRoute(Component, props, isAuthenticated)}/>
+  return <Route {...rest} render={props => renderRoute(Component, props, store.authRepo.authenticated)}/>
 };
 
 export default compose(
-  withRouter
+  withRouter,
+  observer,
 )(ProtectedRoute);

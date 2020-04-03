@@ -4,22 +4,25 @@ import {Redirect} from "react-router";
 import "./Login.scss";
 import LoginForm from "./LoginForm";
 import BlankLayout from "../shared/BlankLayout";
+import {observer} from "mobx-react";
+import {useContext} from "react";
+import {StoreContext} from "../../repositories/rootRepo";
 
 const Login = (props) => {
 
   const [errors, setErrors] = useState({});
   const [login, setLogin] = useState({});
 
-  const isLoggedIn = true;
+  const store = useContext(StoreContext);
 
   const onSubmit = (user) => {
     setLogin(user);
     setErrors({});
 
-    // TODO implement
+    store.authRepo.login(user);
   };
 
-  if (isLoggedIn) {
+  if (store.authRepo.authenticated) {
     return <Redirect to="/"/>;
   }
 
@@ -32,4 +35,4 @@ const Login = (props) => {
   </BlankLayout>
 };
 
-export default Login;
+export default observer(Login);
