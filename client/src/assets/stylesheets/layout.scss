@@ -1,0 +1,11 @@
+.base-layout {
+  min-height: 100vh;
+}
+
+.blank-layout {
+  min-height: 100vh;
+}
+
+.environment-info + .ant-layout {
+  min-height: calc(100vh - 37px);
+}
