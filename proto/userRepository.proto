@@ -2,21 +2,30 @@ syntax="proto3";
 
 package UserRepository;
 
-message Filter {}
+message Filter {
+    string id = 1;
+    string lastname = 2;
+    string firstname = 3;
+}
 
 message Login {
-    string Type = 1;
-    string Sub = 2;
-    string EMail = 3;
+    string type = 1;
+    string sub = 2;
+    string email = 3;
+}
+
+message UserSession {
+
 }
 
 message User {
-    string ID = 1;
-    string Firstname = 2;
-    string Lastname = 3;
-    repeated Login Logins = 4;
+    string id = 1;
+    string firstname = 2;
+    string lastname = 3;
 }
 
 service UserRepository {
     rpc GetUsers(UserRepository.Filter) returns (stream UserRepository.User);
+    rpc Login(UserRepository.Login) returns (UserRepository.UserSession);
+    rpc Logout(UserRepository.User) returns (bool);
 }

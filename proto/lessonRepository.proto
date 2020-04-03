@@ -12,10 +12,10 @@ message Filter {
 }
 
 message Lesson {
-    string ID = 1;
+    string id = 1;
     string start = 2;
     string end = 3;
-    UserRepository.User author = 4;
+    string author = 4;
     repeated AssignmentRepository.Assignment assignments = 5;
 }
 
