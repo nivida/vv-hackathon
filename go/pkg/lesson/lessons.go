@@ -9,7 +9,10 @@ type LessonModule struct {
 }
 
 func (m *LessonModule) Load(a basemodule.AppInterface) error {
-	pb.RegisterRouteGuideServer(a.GetGrpc(), new(GrpcLesson))
+	svc := &GrpcLesson{}
+	// add vars
+	// init (DB...?)
+	pb.RegisterRouteGuideServer(a.GetGrpc(), svc)
 	return nil
 }
 
