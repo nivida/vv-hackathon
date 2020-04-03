@@ -2,6 +2,8 @@ syntax="proto3";
 
 package Bool;
 
+option go_package = "github.com/nivida/vv-hackathon/go/proto/shared/bool";
+
 message Bool {
     bool value = 1;
 }
