@@ -122,7 +122,8 @@ decorate(LessonRepository, {
   addAssignment: action,
   deleteAssignment: action,
   delete: action,
-  getAll: observable,
-  get: observable,
-  getLessonsByUser: observable
+  getAll: action,
+  get: actiom,
+  getLessonsByUser: action,
+  lessons: observable
 });

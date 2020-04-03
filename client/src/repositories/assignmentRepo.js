@@ -3,6 +3,8 @@ import {AssignmentRepositoryClient} from "../../proto-clients/proto/assignmentRe
 import {production} from "../../config";
 
 export class AssignmentRepo {
+  assignments = new Map();
+
   constructor() {
     this.assignmentRepoClient = new AssignmentRepositoryClient(production.grpcEndpoint);
   }
@@ -40,7 +42,8 @@ decorate(AssignmentRepo, {
   create: action,
   update: action,
   delete: action,
-  getAll: observable,
-  getByUser: observable,
-  getByLesson: observable
+  getAll: action,
+  getByUser: action,
+  getByLesson: action,
+  assignments: observable
 });
