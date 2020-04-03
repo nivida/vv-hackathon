@@ -1,1 +1,3 @@
 .vscode
+./client/proto-clients
+.idea

@@ -2,7 +2,7 @@ import {action, decorate, observable} from "mobx";
 
 export class AuthRepo {
 
-  authenticated = false;
+  authenticated = true;
   user = null;
 
   login() {

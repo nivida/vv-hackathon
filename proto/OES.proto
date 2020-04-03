@@ -9,29 +9,30 @@ service User {
 }
 
 service Lessons {
-    rpc DeleteLesson(Lesson) returns();
+    // rpc DeleteLesson(Lesson) returns();
 
-    rpc UpdateLesson(Lesson) returns();
+    //rpc UpdateLesson(Lesson) returns();
 
-    rpc CreateLesson(Lesson) returns();
+   // rpc CreateLesson(Lesson) returns();
 
-    rpc GetLessonsByUser(User, TimeFrame) returns(LessonResponse);
+    //rpc GetLessonsByUser(User, TimeFrame) returns(LessonResponse);
 
-    rpc CreateAssignment(Assignment) returns();
+    /**rpc CreateAssignment(Assignment) returns();
 
     rpc UpdateAssignment(Assignment) returns();
 
     rpc DeleteAssignment(Assignment) returns();
 
-    rpc AddAssignmentToLesson(Assignment) return();
+    rpc AddAssignmentToLesson(Assignment) returns();
 
-    rpc RemoveAssignmentFromLesson(Assignment) return();
+    rpc RemoveAssignmentFromLesson(Assignment) returns();
 
     rpc GetAssignmentsByLesson(Lesson) returns(AssignmentResponse);
 
     rpc AddUserToLesson(User) returns();
 
     rpc DeleteUserFromLesson(User, Lesson) returns();
+    */
 }
 
 message Lesson {
@@ -50,7 +51,7 @@ message UserResponse {
    
 }
 
-message User {
+message UserMsg {
    
 }
 
