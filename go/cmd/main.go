@@ -8,8 +8,10 @@ func main() {
 	// TODO: read init-config
 
 	// TODO: create app
-	vv := new(app.App)
-
+	vv, err := app.New()
+	if err != nil {
+		panic(err)
+	}
 	// TODO: run
-	panic(v.Run())
+	panic(vv.Run())
 }
