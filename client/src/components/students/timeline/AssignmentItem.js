@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Button} from "antd";
 import {ZoomInOutlined} from "@ant-design/icons";
+import ButtonLink from "../../shared/ButtonLink";
 
 const AssignmentItem = ({assignment}) => {
   return (
@@ -9,7 +9,7 @@ const AssignmentItem = ({assignment}) => {
         <p>{assignment.name}</p>
       </div>
       <div style={{float: 'right'}}>
-        <Button icon={<ZoomInOutlined/>}>View</Button>
+        <ButtonLink href={`/assignments/${assignment.id}`} icon={<ZoomInOutlined/>}>View</ButtonLink>
       </div>
     </div>
   )

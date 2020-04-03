@@ -6,8 +6,8 @@ import LessonResources from "./LessonResources";
 const LessonDetails = ({lesson, style = {}}) => {
 
   const assignments = [
-    Assignment.fromPlainObject({name: 'Assignment 1'}),
-    Assignment.fromPlainObject({name: 'Assignment 2'}),
+    Assignment.fromPlainObject({id: 1, name: 'Assignment 1'}),
+    Assignment.fromPlainObject({id: 2, name: 'Assignment 2'}),
   ];
 
   return (

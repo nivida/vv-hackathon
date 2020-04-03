@@ -4,7 +4,7 @@ import {Redirect} from "react-router";
 import "./Login.scss";
 import LoginForm from "./LoginForm";
 import BlankLayout from "../shared/BlankLayout";
-import {observer} from "mobx-react";
+import {observer} from "mobx-react-lite";
 import {useContext} from "react";
 import {StoreContext} from "../../repositories/rootRepo";
 

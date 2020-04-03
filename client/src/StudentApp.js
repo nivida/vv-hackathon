@@ -9,8 +9,8 @@ const StudentApp = (props) => {
   return (
     <AppLayout>
       <Switch>
-        <Route exact path={`/assignments`} component={AssignmentRoutes}/>
         <Route exact path={`/`} component={Dashboard}/>
+        <Route path={`/assignments`} component={AssignmentRoutes}/>
       </Switch>
     </AppLayout>
   )

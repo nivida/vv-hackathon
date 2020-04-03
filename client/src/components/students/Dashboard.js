@@ -2,6 +2,7 @@ import * as React from "react";
 import Lessons from "./timeline/Lessons";
 import {Lesson} from "../../models/lesson";
 import {observer} from "mobx-react-lite";
+import Content from "../shared/Content";
 
 const Dashboard = (props) => {
 
@@ -18,10 +19,10 @@ const Dashboard = (props) => {
   ];
 
   return (
-    <div style={{padding: '20px 20%'}}>
+    <Content>
       <h1>Timeline</h1>
       <Lessons lessons={lessons}/>
-    </div>
+    </Content>
   )
 };
 

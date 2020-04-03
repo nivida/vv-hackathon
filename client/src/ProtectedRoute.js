@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import {Redirect, Route, withRouter} from 'react-router-dom'
 import {compose} from "./utils/compose";
 import {StoreContext} from "./repositories/rootRepo";
-import {observer} from "mobx-react";
+import {observer} from "mobx-react-lite";
 
 const ProtectedRoute = (props) => {
 
