@@ -1,0 +1,26 @@
+version: "3.5"
+
+services: 
+  roach:
+    image: cockroachdb/cockroach:latest
+    command: start --insecure
+    ports:
+        - "26257:26257"
+        - "8080:8080"
+    networks:
+      cockroachdb_net:
+  
+  roach_node:
+    image: cockroachdb/cockroach:latest
+    command: start --insecure --join=roach
+    networks:
+      cockroachdb_net:
+
+  backend:
+    build:
+      context: go
+
+
+networks:
+    cockroachdb_net:
+        driver: bridge

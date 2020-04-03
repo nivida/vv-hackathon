@@ -1,0 +1,18 @@
+syntax="proto3";
+
+package test;
+
+option go_package = "proto/test";
+
+service Hello {
+    rpc SayHello(Contact) returns(HelloMsg);
+}
+
+message Contact {
+    string Firstname = 1;
+    string Lastname = 2;
+}
+
+message HelloMsg {
+    string Msg = 1;
+}
