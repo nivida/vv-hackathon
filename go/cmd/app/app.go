@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/julienschmidt/httprouter"
 	"golang.org/x/xerrors"
 	"google.golang.org/grpc"
 
@@ -16,7 +15,7 @@ type Config struct {
 	DbConfig map[string]string `yaml:"db"`
 }
 type App struct {
-	router     *httprouter.Router
+	// router     *httprouter.Router
 	grpcServer *grpc.Server
 	db         *sql.DB
 }
@@ -24,14 +23,11 @@ type App struct {
 func New() (app *App, err error) {
 	app = new(App)
 	app.grpcServer = grpc.NewServer()
-	app.router = httprouter.New()
+	// app.router = httprouter.New()
 	app.db, err = sql.Open("postgres", "postgresql://root@localhost:26257?sslmode=disable")
 	return app, err
 }
 
-func (a *App) GetRouter() *httprouter.Router {
-	return a.router
-}
 func (a *App) GetGrpc() *grpc.Server {
 	return a.grpcServer
 }

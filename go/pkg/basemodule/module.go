@@ -1,13 +1,14 @@
 package basemodule
 
 import (
-	"github.com/julienschmidt/httprouter"
+	"database/sql"
+
 	"google.golang.org/grpc"
 )
 
 type AppInterface interface {
-	GetRouter() *httprouter.Router
 	GetGrpc() *grpc.Server
+	GetDb() *sql.Conn
 }
 
 type Module interface {
