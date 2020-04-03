@@ -28,6 +28,10 @@ func New(c *Config) (app *App, err error) {
 	return app, err
 }
 
+func (a *App) grpcSetup(c *Config) error {
+	a.grpcServer = grpc.NewServer()
+	return nil
+}
 func (a *App) dbSetup(c *Config) error {
 	files := rice.MustFindBox("../../assets")
 	sqlFile, err := files.Open("sql/v1/base.sql")

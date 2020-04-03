@@ -1,4 +1,4 @@
-package basemodule
+package module
 
 import (
 	"database/sql"
