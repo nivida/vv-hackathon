@@ -13,7 +13,7 @@ const LessonItem = ({lesson, ...props}) => {
       <Row justify={'space-between'} type={'flex'}>
         <Col>
           <p style={{fontWeight: 'bold', margin: 0}}>{'09:00 - 10:00'}</p>
-          <h3 style={{margin: 0}}>{lesson.name}</h3>
+          <h2 style={{margin: 0}}>{lesson.name}</h2>
         </Col>
         {expanded ? (
           <Col span={24}>
@@ -22,7 +22,8 @@ const LessonItem = ({lesson, ...props}) => {
         ) : null}
         <Col span={24}>
           <Row justify={'center'} type={'flex'}>
-            <Button onClick={() => setExpanded(expanded => !expanded)} type={'link'}>
+            <Button onClick={() => setExpanded(expanded => !expanded)} type={'link'}
+                    style={{marginTop: expanded ? 20 : 0}}>
               {expanded ? (
                 <><UpOutlined/> Less</>
               ) : (

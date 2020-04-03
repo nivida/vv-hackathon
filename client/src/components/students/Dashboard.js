@@ -7,7 +7,8 @@ const Dashboard = (props) => {
   const lessons = [
     Lesson.fromPlainObject({
       id: '1',
-      name: 'Math'
+      name: 'Math',
+      callUrl: 'https://www.google.com'
     }),
     Lesson.fromPlainObject({
       id: '2',
