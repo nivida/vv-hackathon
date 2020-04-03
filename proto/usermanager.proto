@@ -1,0 +1,9 @@
+syntax="proto3";
+
+package UserManager;
+
+import "proto/entity/user.proto";
+
+service UserManager {
+    rpc GetUsers(User.Filter) returns (stream User.User);
+}

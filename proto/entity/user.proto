@@ -1,0 +1,18 @@
+syntax="proto3";
+
+package User;
+
+message Filter {}
+
+message Login {
+    string Type = 1;
+    string Sub = 2;
+    string EMail = 3;
+}
+
+message User {
+    string ID = 1;
+    string Firstname = 2;
+    string Lastname = 3;
+    repeated Login Logins = 4;   
+}
