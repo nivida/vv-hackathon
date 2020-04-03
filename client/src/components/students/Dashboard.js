@@ -1,7 +1,26 @@
 import * as React from "react";
+import Lessons from "./Lessons";
+import {Lesson} from "../../models/lesson";
 
 const Dashboard = (props) => {
-  return <p>Student Dashboard works!</p>
+
+  const lessons = [
+    Lesson.fromPlainObject({
+      id: '1',
+      name: 'Math'
+    }),
+    Lesson.fromPlainObject({
+      id: '2',
+      name: 'History'
+    })
+  ];
+
+  return (
+    <div style={{padding: '20px 20%'}}>
+      <h1>Timeline</h1>
+      <Lessons lessons={lessons}/>
+    </div>
+  )
 };
 
 export default Dashboard;
