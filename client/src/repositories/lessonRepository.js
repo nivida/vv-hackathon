@@ -9,7 +9,22 @@ export class LessonRepository {
   }
 
 
-  create() {
+  create(lesson) {
+    return new Promise((resolve, reject) => {
+      this.lessonRepoClient.createLesson(
+        lesson,
+        this.authRepository.metadata,
+        (err, response) => {
+          if (!err) {
+            resolve(response);
+
+            return;
+          }
+
+          reject(err);
+        }
+      )
+    });
     // TODO implement
   }
 

@@ -21,6 +21,6 @@ jsproto:
 		-exec \
 			protoc \
 			--proto_path=. \
-			--grpc-web_out=import_style=commonjs,mode=grpcwebtext:./client/proto-clients \
+			--grpc-web_out=import_style=commonjs,mode=grpcweb:./client/proto-clients \
 		{} ';'   \
     ;
