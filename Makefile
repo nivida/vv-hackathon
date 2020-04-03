@@ -2,13 +2,16 @@
 .PHONY: goproto
 goproto:
 	# clean proto folder
-	rm -rf ./go/proto/*;
+	rm -rf ./go/proto/*
+	mkdir -p ./go/proto/
 	# generate protobufs
 	find ./proto/ -type f -name *.proto -exec \
 		protoc \
-			--proto_path=${GOPATH}/src:. \
-			--go_out=$(PWD)/go/ \
+			--proto_path=. \
+			--go_out=plugins=grpc:./go/proto \
 		{} \;
+	mv go/proto/github.com/nivida/vv-hackathon/go/proto/* go/proto
+	rm -rf go/proto/github.com
 
 .PHONY: jsproto
 jsproto:

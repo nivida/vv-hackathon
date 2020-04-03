@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"log"
 	"os"
 
 	"github.com/nivida/vv-hackathon/go/cmd/app"
@@ -9,9 +11,14 @@ import (
 
 func main() {
 
+	cfgFile := flag.String("config", "./config.yaml", "Path to config file")
+
+	flag.Parse()
+
 	// TODO: read init-config
 	var config app.Config
-	f, err := os.Open("./config.yaml")
+	log.Println(os.Getwd())
+	f, err := os.Open(*cfgFile)
 	if err != nil {
 		panic(err)
 	}
