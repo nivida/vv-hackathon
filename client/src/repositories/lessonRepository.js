@@ -57,7 +57,15 @@ export class LessonRepository {
     });
   }
 
-  addAssignment(lessonIs, assignemnIdt) {
+  /**
+   * @method addAssignment
+   *
+   * @param lessonId
+   * @param assignemnId
+   *
+   * @returns {Promise<any>}
+   */
+  addAssignment(lessonId, assignemnId) {
     return new Promise((resolve, reject) => {
       this.lessonRepoClient.addAssignment(
         {
@@ -78,17 +86,21 @@ export class LessonRepository {
     });
   }
 
-  deleteAssignment() {
+  /**
+   * @param assignmentId
+   * @returns {Promise<any>}
+   */
+  deleteAssignment(assignmentId) {
     return new Promise((resolve, reject) => {
       this.lessonRepoClient.deleteAssignment(
         {
-          lesson: lessonId,
           assignment: assignmentId
         },
         this.authRepository.metadata,
         (err, response) => {
           if (!err) {
-            this.lessons.set(lesson.id, response);
+            // TODO: update lessons
+
             resolve(response);
 
             return;
@@ -99,22 +111,30 @@ export class LessonRepository {
     });
   }
 
-  get() {
+  /**
+   * @param filter
+   * @returns {Promise<any>}
+   */
+  getLessons(filter) {
+    return new Promise((resolve, reject) => {
+      this.lessonRepoClient.deleteAssignment(
+        filter,
+        this.authRepository.metadata,
+        (err, response) => {
+          if (!err) {
+            resolve(response);
 
+            response.forEach((lesson => {
+              this.lessons.set(lesson.id, lesson);
+            }));
+
+            return;
+          }
+
+          reject(err);
+        })
+    });
   }
-
-  getAll() {
-    // TODO implement
-  }
-
-  getLessonsByUser() {
-    // TODO implement
-  }
-
-  getLessonsByAuthor() {
-    // TODO implement
-  }
-
 }
 
 decorate(LessonRepository, {
