@@ -27,7 +27,7 @@ message User {
 }
 
 service UserRepository {
-    rpc GetUsers(Filter) returns (stream User);
+    rpc GetUsers(Filter) returns (User);
     rpc Authenticate(Login) returns (UserSession);
     rpc Logout(Login) returns (Bool.Bool);
 }

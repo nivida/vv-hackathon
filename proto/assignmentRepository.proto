@@ -1,9 +1,9 @@
 syntax="proto3";
 
+package AssignmentRepository;
+
 import "proto/userRepository.proto";
 import "proto/shared/bool.proto";
-
-package AssignmentRepository;
 
 message Filter {
     string topic = 1;
@@ -20,7 +20,7 @@ message Assignment {
 }
 
 service AssignmentRepository {
-    rpc GetAssignments(Filter) returns (stream Assignment);
+    rpc GetAssignments(Filter) returns (Assignment);
     rpc CreateAssignment(Assignment) returns(Assignment);
     rpc DeleteAssignment(Assignment) returns(Bool.Bool);
     rpc UpdateAssignment(Assignment) returns(Assignment);

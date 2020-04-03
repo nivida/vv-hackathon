@@ -20,7 +20,7 @@ message Lesson {
 }
 
 service LessonRepository {
-    rpc GetLessons(Filter) returns (stream Lesson);
+    rpc GetLessons(Filter) returns (Lesson);
     rpc CreateLesson(Lesson) returns (Bool.Bool);
     rpc DeleteLesson(Lesson) returns (Bool.Bool);
     rpc AddAssignment(AssignmentRepository.Assignment) returns (Bool.Bool);
