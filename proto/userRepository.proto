@@ -1,6 +1,6 @@
 syntax="proto3";
 
-package User;
+package UserRepository;
 
 message Filter {}
 
@@ -17,6 +17,6 @@ message User {
     repeated Login Logins = 4;
 }
 
-service User {
-    rpc GetUsers(User.Filter) returns (stream User.User);
+service UserRepository {
+    rpc GetUsers(UserRepository.Filter) returns (stream UserRepository.User);
 }

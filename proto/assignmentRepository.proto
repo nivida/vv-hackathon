@@ -1,0 +1,26 @@
+syntax="proto3";
+
+import "./proto/userRepository.proto";
+import "./proto/lessonRepository.proto";
+
+package AssignmentRepository;
+
+message Filter {
+    string topic = 1;
+    string author = 2;
+}
+
+message Assignment {
+    string ID = 1;
+    UserRepository.User author = 2;
+    string content = 3;
+    string start = 4;
+    string end = 5;
+}
+
+service AssignmentRepository {
+    rpc GetAssignments(AssignmentRepository.Filter) returns (stream AssignmentRepository.Assignment);
+    rpc CreateAssignment(AssignmentRepository.Assignment) returns(string);
+    rpc DeleteAssignment(string) returns(bool);
+    rpc UpdateAssignment(AssignmentRepository.Assignment) returns(AssignmentRepository.Assignment);
+}

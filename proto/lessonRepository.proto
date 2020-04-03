@@ -1,0 +1,29 @@
+syntax="proto3";
+
+package LessonRepository;
+
+import "./proto/assignmentRepository.proto";
+import "./proto/userRepository.proto";
+
+message Filter {
+    string author = 1;
+    string user = 2;
+    string lesson = 3;
+}
+
+message Lesson {
+    string ID = 1;
+    string start = 2;
+    string end = 3;
+    UserRepository.User author = 4;
+    repeated AssignmentRepository.Assignment assignments = 5;
+}
+
+service LessonRepository {
+    rpc GetLessons(LessonRepository.Filter) returns (stream LessonRepository.Lesson);
+    rpc CreateLesson(LessonRepository.Lesson) returns (bool);
+    rpc DeleteLesson(LessonRepository.Lesson) returns (bool);
+    rpc AddAssignment(AssignmentRepository.Assignment) returns (bool);
+    rpc DeleteAssignment(AssignmentRepository.Assignment) returns (bool);
+    rpc GetAssignments(LessonRepository.Filter) returns (AssignmentRepository.Assignment);
+}

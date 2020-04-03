@@ -26,8 +26,3 @@ jsproto:
 			--grpc-web_out=import_style=commonjs,mode=grpcwebtext:./client/proto-clients \
 		{} ';'   \
     ;
-
-.PHONY: jsclean
-jsclean:
-    mv ./client/proto-clients/proto/* ./client/proto-clients/
-    rm -r ./client/proto-clients/proto
