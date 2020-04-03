@@ -3,12 +3,16 @@ import {production} from "../../config.json"
 import {LessonRepositoryClient} from '../../proto-clients/proto/lessonRepository_grpc_web_pb.js';
 
 export class LessonRepository {
+  lessons = new Map();
+  lessonRepoClient = new LessonRepositoryClient(production.grpcEndpoint);
 
-  constructor() {
-    this.lessonRepoClient = new LessonRepositoryClient(production.grpcEndpoint);
-  }
-
-
+  /**
+   * @method create
+   *
+   * @param {any} lesson
+   *
+   * @returns {Promise<any>}
+   */
   create(lesson) {
     return new Promise((resolve, reject) => {
       this.lessonRepoClient.createLesson(
@@ -16,6 +20,7 @@ export class LessonRepository {
         this.authRepository.metadata,
         (err, response) => {
           if (!err) {
+            this.lessons.set(lesson.id, lesson);
             resolve(response);
 
             return;
@@ -25,19 +30,73 @@ export class LessonRepository {
         }
       )
     });
-    // TODO implement
   }
 
-  delete() {
-    // TODO implement
+  /**
+   * @method delete
+   *
+   * @param {any} lesson
+   *
+   * @returns {Promise<any>}
+   */
+  delete(lesson) {
+    return new Promise((resolve, reject) => {
+      this.lessonRepoClient.deleteLesson(
+        lesson,
+        this.authRepository.metadata,
+        (err, response) => {
+          if (!err) {
+            this.lessons.delete(lesson.id);
+            resolve(response);
+
+            return;
+          }
+
+          reject(err);
+        })
+    });
   }
 
-  addAssignment() {
-    // TODO implement
+  addAssignment(lessonIs, assignemnIdt) {
+    return new Promise((resolve, reject) => {
+      this.lessonRepoClient.addAssignment(
+        {
+          lesson: lessonId,
+          assignment: assignmentId
+        },
+        this.authRepository.metadata,
+        (err, response) => {
+          if (!err) {
+            this.lessons.set(lesson.id, response);
+            resolve(response);
+
+            return;
+          }
+
+          reject(err);
+        })
+    });
   }
 
   deleteAssignment() {
-    // TODO implement
+    return new Promise((resolve, reject) => {
+      this.lessonRepoClient.deleteAssignment(
+        {
+          lesson: lessonId,
+          assignment: assignmentId
+        },
+        this.authRepository.metadata,
+        (err, response) => {
+          if (!err) {
+            this.lessons.set(lesson.id, response);
+            resolve(response);
+
+            return;
+          }
+
+          reject(err);
+        })
+    });
   }
 
   get() {

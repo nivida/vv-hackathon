@@ -19,11 +19,21 @@ message Lesson {
     repeated AssignmentRepository.Assignment assignments = 5;
 }
 
+message AddAssignment {
+    string lesson = 1;
+    string assignment = 2;
+}
+
+message DeleteAssignment {
+    string lesson = 1;
+    string assignment = 2;
+}
+
 service LessonRepository {
     rpc GetLessons(Filter) returns (Lesson);
-    rpc CreateLesson(Lesson) returns (Bool.Bool);
+    rpc CreateLesson(Lesson) returns (Lesson);
     rpc DeleteLesson(Lesson) returns (Bool.Bool);
-    rpc AddAssignment(AssignmentRepository.Assignment) returns (Bool.Bool);
-    rpc DeleteAssignment(AssignmentRepository.Assignment) returns (Bool.Bool);
+    rpc AddAssignment(AddAssignment) returns (Lesson);
+    rpc DeleteAssignment(DeleteAssignment) returns (Bool.Bool);
     rpc GetAssignments(Filter) returns (AssignmentRepository.Assignment);
 }
