@@ -23,9 +23,9 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "start": "npm run build:proto && react-app-rewired start",
+    "build": "npm run build:proto && react-app-rewired build",
+    "test": "npm run build:proto && react-app-rewired test",
     "eject": "react-app-rewired eject",
     "build:proto": "./scripts/proto3.sh"
   },
