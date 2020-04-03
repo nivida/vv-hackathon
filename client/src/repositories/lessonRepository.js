@@ -29,6 +29,10 @@ export class LessonRepository {
     // TODO implement
   }
 
+  getLessonsByAuthor() {
+    // TODO implement
+  }
+
 }
 
 decorate(LessonRepository, {

@@ -3,9 +3,9 @@ syntax="proto3";
 package Assignment;
 
 message Filter {
-    string userId = 1;
-    string lessonId = 2;
-    
+    string author = 1;
+    string user = 2;
+    string lesson = 3;
 }
 
 message Assignment {

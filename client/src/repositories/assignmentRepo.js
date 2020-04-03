@@ -13,10 +13,6 @@ export class AssignmentRepo {
     // TODO implement
   }
 
-  getByLesson() {
-    // TODO implement
-  }
-
   getAll() {
     // TODO implement
   }
@@ -25,6 +21,13 @@ export class AssignmentRepo {
     // TODO implement
   }
 
+  getByAuthor() {
+    // TODO implement
+  }
+
+  getByLesson() {
+    // TODO implement
+  }
 }
 
 decorate(AssignmentRepo, {
