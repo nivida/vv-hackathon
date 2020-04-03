@@ -1,6 +1,6 @@
 import * as React from "react";
 import Assignments from "./Assignments";
-import {Assignment} from "../../models/assignment";
+import {Assignment} from "../../../models/assignment";
 import LessonResources from "./LessonResources";
 
 const LessonDetails = ({lesson, style = {}}) => {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import Lessons from "./Lessons";
+import Lessons from "./timeline/Lessons";
 import {Lesson} from "../../models/lesson";
 
 const Dashboard = (props) => {
