@@ -1,0 +1,18 @@
+syntax="proto3";
+
+package Lesson;
+
+message Filter {
+
+}
+
+message Lesson {
+    string ID = 1;
+    string content = 2;
+    string start = 3;
+    string end = 4;
+}
+
+service Lesson {
+    rpc GetLessons(Lesson.Filter) returns (stream Lesson.Lesson);
+}

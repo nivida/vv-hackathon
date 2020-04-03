@@ -1,0 +1,23 @@
+syntax="proto3";
+
+package Assignment;
+
+message Filter {
+    string userId = 1;
+    string lessonId = 2;
+    
+}
+
+message Assignment {
+    string ID = 1;
+    string content = 2;
+    string start = 3;
+    string end = 4;
+}
+
+service Assignment {
+    rpc GetAssignments(Assignment.Filter) returns (stream Assignment.Assignment);
+    rpc CreateAssignment(Assignment.Assignment) returns(string);
+    rpc DeleteAssignment(string) returns(bool);
+    rpc UpdateAssignment(Assignment.Assignment) returns(Assignment.Assignment);
+}

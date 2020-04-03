@@ -14,5 +14,9 @@ message User {
     string ID = 1;
     string Firstname = 2;
     string Lastname = 3;
-    repeated Login Logins = 4;   
+    repeated Login Logins = 4;
+}
+
+service User {
+    rpc GetUsers(User.Filter) returns (stream User.User);
 }
