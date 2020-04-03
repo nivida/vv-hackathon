@@ -1,6 +1,12 @@
 import {action, decorate, observable} from "mobx";
+import {AssignmentRepositoryClient} from "../../proto-clients/proto/assignmentRepository_grpc_web_pb";
+import {production} from "../../config";
 
 export class AssignmentRepo {
+  constructor() {
+    this.assignmentRepoClient = new AssignmentRepositoryClient(production.grpcEndpoint);
+  }
+
   create() {
     // TODO implement
   }
