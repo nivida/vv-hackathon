@@ -20,6 +20,7 @@ services:
     build:
       context: ./
       dockerfile: docker/backend/Dockerfile
+    command: -config=/app/config.yaml
     ports:
       - "4242:3000"
     networks:

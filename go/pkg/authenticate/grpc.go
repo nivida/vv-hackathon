@@ -18,7 +18,7 @@ func (a *Auth) Check(ctx context.Context) (*userlogin.Login, error) {
 	}
 	switch authMethod[0] {
 	case "Demo":
-		return nil, nil
+		return a.demo(ctx)
 	case "Basic":
 		return a.basic(ctx)
 	case "Bearer":

@@ -1,4 +1,4 @@
 db:
-  host: localhost
+  host: roach
   port: 26257
   user: root
