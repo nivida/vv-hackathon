@@ -10,8 +10,6 @@ goproto:
 			--go_out=$(PWD)/go/ \
 		{} \;
 
-
-
 .PHONY: jsproto
 jsproto:
 	# generate protobufs

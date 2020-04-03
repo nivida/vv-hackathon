@@ -1,13 +1,14 @@
 syntax="proto3";
 
-import "./proto/userRepository.proto";
-import "./proto/lessonRepository.proto";
+import "proto/userRepository.proto";
+import "proto/shared/bool.proto";
 
 package AssignmentRepository;
 
 message Filter {
     string topic = 1;
     string author = 2;
+    string id = 3;
 }
 
 message Assignment {
@@ -19,8 +20,8 @@ message Assignment {
 }
 
 service AssignmentRepository {
-    rpc GetAssignments(AssignmentRepository.Filter) returns (stream AssignmentRepository.Assignment);
-    rpc CreateAssignment(AssignmentRepository.Assignment) returns(string);
-    rpc DeleteAssignment(string) returns(bool);
-    rpc UpdateAssignment(AssignmentRepository.Assignment) returns(AssignmentRepository.Assignment);
+    rpc GetAssignments(Filter) returns (stream Assignment);
+    rpc CreateAssignment(Assignment) returns(Assignment);
+    rpc DeleteAssignment(Assignment) returns(Bool.Bool);
+    rpc UpdateAssignment(Assignment) returns(Assignment);
 }

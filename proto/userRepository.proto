@@ -2,6 +2,8 @@ syntax="proto3";
 
 package UserRepository;
 
+import "proto/shared/bool.proto";
+
 message Filter {
     string id = 1;
     string lastname = 2;
@@ -15,7 +17,7 @@ message Login {
 }
 
 message UserSession {
-
+    string token = 1;
 }
 
 message User {
@@ -25,7 +27,7 @@ message User {
 }
 
 service UserRepository {
-    rpc GetUsers(UserRepository.Filter) returns (stream UserRepository.User);
-    rpc Login(UserRepository.Login) returns (UserRepository.UserSession);
-    rpc Logout(UserRepository.User) returns (bool);
+    rpc GetUsers(Filter) returns (stream User);
+    rpc Authenticate(Login) returns (UserSession);
+    rpc Logout(Login) returns (Bool.Bool);
 }
