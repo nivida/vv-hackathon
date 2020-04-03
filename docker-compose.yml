@@ -18,7 +18,12 @@ services:
 
   backend:
     build:
-      context: go
+      context: ./
+      dockerfile: docker/backend/Dockerfile
+    ports:
+      - "4242:3000"
+    networks:
+      cockroachdb_net:
 
 
 networks:
