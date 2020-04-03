@@ -21,7 +21,7 @@ services:
       context: ./
       dockerfile: docker/backend/Dockerfile
     ports:
-      - "3000:3000"
+      - "4242:3000"
     networks:
       cockroachdb_net:
 
