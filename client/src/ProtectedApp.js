@@ -1,16 +1,21 @@
 import * as React from "react";
-import AppLayout from "./components/shared/AppLayout";
-import {Route, Switch} from "react-router";
-import Dashboard from "./components/dashboard/Dashboard";
+import {UserTypes} from "./models/user";
+import StudentApp from "./StudentApp";
+import TeacherApp from "./TeacherApp";
 
 const ProtectedApp = (props) => {
-  return (
-    <AppLayout>
-      <Switch>
-        <Route exact path={`/`} component={Dashboard}/>
-      </Switch>
-    </AppLayout>
-  )
+
+  const userType = UserTypes.student;
+
+  if (userType === UserTypes.student) {
+    return <StudentApp/>
+  }
+
+  if (userType === UserTypes.teacher) {
+    return <TeacherApp/>
+  }
+
+  return <p>unknown user type</p>;
 };
 
 export default ProtectedApp;

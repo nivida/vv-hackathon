@@ -1,6 +1,7 @@
 import * as React from "react";
 import Lessons from "./timeline/Lessons";
 import {Lesson} from "../../models/lesson";
+import {observer} from "mobx-react-lite";
 
 const Dashboard = (props) => {
 
@@ -24,4 +25,4 @@ const Dashboard = (props) => {
   )
 };
 
-export default Dashboard;
+export default observer(Dashboard);
