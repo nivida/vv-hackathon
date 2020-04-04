@@ -18,7 +18,8 @@ const VideoPreview = ({stream}) => {
   if (!stream) {
     return null;
   }
-  return <video ref={videoRef} className="video-container" autoPlay controls />;
+
+  return <video ref={videoRef} controls autoPlay muted className="video-container" />;
 };
 
 export default class VideoRecordForm extends React.Component {
