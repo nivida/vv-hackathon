@@ -1,8 +1,0 @@
-{
-    "production": {
-        "grpcEndpoint": "/api/webgrpc"
-    },
-    "dev": {
-        "grpcEndpoint": ""
-    }
-}
