@@ -3,7 +3,6 @@ import {Tabs} from "antd";
 import AssignmentsTable from "./assignments/AssignmentsTable";
 import LessonsTable from "./lessons/LessonsTable";
 import Content from "../shared/Content";
-import AudioRecordForm from "../students/exercise/AudioRecordForm";
 
 const Dashboard = (props) => {
   return (
@@ -16,7 +15,6 @@ const Dashboard = (props) => {
           <AssignmentsTable/>
         </Tabs.TabPane>
       </Tabs>
-      <AudioRecordForm />
     </Content>
   )
 };
