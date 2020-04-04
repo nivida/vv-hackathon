@@ -11,7 +11,7 @@ const Assignments = ({assignments = []}) => {
       )}>
         <List
           size={'large'}
-          bordered={true}
+          bordered={false}
           dataSource={assignments}
           renderItem={assignment => (
             <List.Item key={assignment.id}>

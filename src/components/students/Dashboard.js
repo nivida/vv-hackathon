@@ -1,27 +1,27 @@
 import * as React from "react";
+import {useContext, useEffect, useState} from "react";
 import Lessons from "./timeline/Lessons";
-import {Lesson} from "../../models/lesson";
 import {observer} from "mobx-react-lite";
 import Content from "../shared/Content";
+import {StoreContext} from "../../repositories/rootRepo";
+import {Spin} from "antd";
 
 const Dashboard = (props) => {
 
-  const lessons = [
-    Lesson.fromPlainObject({
-      id: '1',
-      name: 'Math',
-      callUrl: 'https://www.google.com'
-    }),
-    Lesson.fromPlainObject({
-      id: '2',
-      name: 'History'
-    })
-  ];
+  const store = useContext(StoreContext);
+  const [lessons, setLessons] = useState(null);
+
+  useEffect(() => {
+    store.lessonRepository.getLessonsByUser(store.authRepo.user.uid).then(lessons => {
+      console.log(lessons);
+      setLessons(lessons);
+    });
+  }, []);
 
   return (
     <Content>
       <h1>Timeline</h1>
-      <Lessons lessons={lessons}/>
+      {lessons ? <Lessons lessons={lessons}/> : <Spin/>}
     </Content>
   )
 };
