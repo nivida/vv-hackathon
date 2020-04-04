@@ -5,6 +5,22 @@ import "./VideoRecordForm.scss";
 import {ReactMediaRecorder} from "react-media-recorder";
 import PlayCircleOutlined from "@ant-design/icons/es/icons/PlayCircleOutlined";
 import PauseCircleOutlined from "@ant-design/icons/es/icons/PauseCircleOutlined";
+import {useRef, useEffect} from "react";
+
+const VideoPreview = ({stream}) => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [stream]);
+  if (!stream) {
+    return null;
+  }
+
+  return <video ref={videoRef} controls autoPlay muted className="video-container" />;
+};
 
 export default class VideoRecordForm extends React.Component {
   layout = {
@@ -57,9 +73,9 @@ export default class VideoRecordForm extends React.Component {
           >
               <ReactMediaRecorder
                 video
-                render={({startRecording, stopRecording, mediaBlobUrl}) => (
+                render={({startRecording, stopRecording, mediaBlobUrl, previewStream, status}) => (
                   <div className="video-wrapper">
-                    <video src={mediaBlobUrl} controls autoPlay className="video-container"/>
+                    {(status === 'stopped') ? <video src={mediaBlobUrl} controls autoPlay className="video-container"/> : <VideoPreview stream={previewStream} />}
                     <Button type="primary" shape="circle" onClick={() => {startRecording(); this.start()}} style={{margin: '10px 8px 0 0', height: '36px', width: '36px'}} >
                       <PlayCircleOutlined className="play-button" />
                     </Button>
