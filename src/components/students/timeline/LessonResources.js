@@ -1,11 +1,26 @@
 import * as React from "react";
-import {Empty} from "antd";
+import {Empty, List} from "antd";
+import Material from "../assignments/Material";
 
-const LessonResources = (props) => {
+const LessonResources = ({materials = []}) => {
   return (
-    <div style={{marginTop: 10}}>
+    <div style={{marginTop: 10, marginBottom: 30}}>
       <h4>Resources</h4>
-      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'No resources'}/>
+      {
+        materials.length === 0 ? (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'No materials'}/>
+          ) :
+          <List
+            size="large"
+            bordered
+            dataSource={materials}
+            renderItem={material => (
+              <List.Item>
+                <Material material={material}/>
+              </List.Item>
+            )}
+          />
+      }
     </div>
   )
 };
