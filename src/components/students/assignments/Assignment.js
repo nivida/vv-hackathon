@@ -5,11 +5,11 @@ import {observer} from "mobx-react-lite";
 import Content from "../../shared/Content";
 import {ArrowLeftOutlined} from "@ant-design/icons";
 import ButtonLink from "../../shared/ButtonLink";
-import {Card, Empty, Spin} from "antd";
+import {Card, Spin} from "antd";
 import AssignmentResources from "./AssignmentResources";
-import ExerciseSmall from "../exercise/ExerciseSmall";
 import AssignmentComments from "./AssignmentComments";
 import {StoreContext} from "../../../repositories/rootRepo";
+import Exercises from "./Exercises";
 
 const Assignment = ({match: {params}}) => {
   const store = useContext(StoreContext);
@@ -51,11 +51,7 @@ const Assignment = ({match: {params}}) => {
       <div style={{marginTop: 30}}>
         <h3>Exercises</h3>
         {
-          exercises ? exercises.map((exercise) => (
-            <Card title={false} bordered={false} style={{marginTop: 20}} key={exercise.id}>
-              <ExerciseSmall exercise={exercise}/>
-            </Card>
-          )) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'No exercises'}/>
+          exercises ? <Exercises exercises={exercises}/> : <Spin/>
         }
       </div>
       <div style={{marginTop: 30}}>
