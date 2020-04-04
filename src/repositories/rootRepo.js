@@ -3,11 +3,13 @@ import * as React from "react";
 import {LessonRepository} from "./lessonRepository";
 import {AssignmentRepo} from "./assignmentRepo";
 import {UserRepo} from "./userRepo";
+import {ExerciseRepo} from "./exerciseRepo";
 
 export class RootRepo {
   constructor() {
     this.authRepo = new AuthRepo();
     this.assignmentRepo = new AssignmentRepo();
+    this.exerciseRepo = new ExerciseRepo();
     this.lessonRepository = new LessonRepository();
     this.userRepo = new UserRepo();
   }

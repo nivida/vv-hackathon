@@ -1,10 +1,10 @@
 import {action, decorate} from "mobx";
 import {firebase, querySnapToDataArray} from "../Firebase";
-import {Assignment as AssignmentModel} from "../models/assignment";
 import {firestore} from "firebase";
+import {Exercise} from "../models/exercise";
 
-export class AssignmentRepo {
-  collectionName = 'assignments';
+export class ExerciseRepo {
+  collectionName = 'exercises';
 
   create(data) {
     return firebase.firestore
@@ -13,17 +13,17 @@ export class AssignmentRepo {
       .set(data);
   }
 
-  delete(assignmentId) {
+  delete(exerciseId) {
     return firebase.firestore
       .collection(this.collectionName)
-      .doc(assignmentId)
+      .doc(exerciseId)
       .delete();
   }
 
-  update(assignmentId, changes) {
+  update(exerciseId, changes) {
     return firebase.firestore
       .collection(this.collectionName)
-      .doc(assignmentId)
+      .doc(exerciseId)
       .update(changes);
   }
 
@@ -31,16 +31,8 @@ export class AssignmentRepo {
     return querySnapToDataArray(
       await firebase.firestore
         .collection(this.collectionName)
-        .get()
-    );
-  }
-
-  async getByUser(userId) {
-    return querySnapToDataArray(
-      await firebase.firestore
-        .collection(this.collectionName)
-        .where('user', '==', userId)
-        .get()
+        .get(),
+      Exercise
     );
   }
 
@@ -49,33 +41,25 @@ export class AssignmentRepo {
       .collection(this.collectionName)
       .doc(id)
       .get();
-    return AssignmentModel.fromPlainObject({...doc.data(), id});
+    return Exercise.fromPlainObject({...doc.data(), id});
   }
 
-  async getByAuthor(authorId) {
+  async getByAssignment(assignment) {
     return querySnapToDataArray(
       await firebase.firestore
         .collection(this.collectionName)
-        .where('author', '==', authorId)
-        .get()
-    );
-  }
-
-  async getByLesson(lesson) {
-    return querySnapToDataArray(
-      await firebase.firestore
-        .collection(this.collectionName)
-        .where(firestore.FieldPath.documentId(), 'in', lesson.assignments)
-        .get()
+        .where(firestore.FieldPath.documentId(), 'in', assignment.exercises || [])
+        .get(),
+      Exercise
     );
   }
 }
 
-decorate(AssignmentRepo, {
+decorate(ExerciseRepo, {
   create: action,
   update: action,
   delete: action,
   getAll: action,
-  getByUser: action,
-  getByLesson: action
+  getById: action,
+  getByAssignment: action
 });
