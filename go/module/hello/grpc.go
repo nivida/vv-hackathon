@@ -12,6 +12,6 @@ type helloGrpc struct {
 
 func (h *helloGrpc) Greet(ctx context.Context, v *hello.Visiter) (*hello.HelloMsg, error) {
 	return &hello.HelloMsg{
-		Msg: fmt.Sprintf("Hi dear stranger named %s", v.GetName),
+		Msg: fmt.Sprintf("Hi dear stranger named %s", v.GetName()),
 	}, nil
 }
