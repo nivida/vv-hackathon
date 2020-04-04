@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {Redirect, Route, withRouter} from 'react-router-dom'
 import {compose} from "./utils/compose";
 import {StoreContext} from "./repositories/rootRepo";
@@ -9,6 +9,12 @@ const ProtectedRoute = (props) => {
   const {component: Component, redirectPath = '/login', ...rest} = props;
   const store = useContext(StoreContext);
   const isAuthenticated = store.authRepo.authenticated;
+
+  useEffect(() => {
+    if (store.authRepo.user) {
+      store.authRepo.loadUser(store.authRepo.user);
+    }
+  }, []);
 
   const renderRoute = (Component, props, authenticated) => {
     if (authenticated) {

@@ -3,8 +3,16 @@ import {action, decorate, observable} from "mobx";
 
 export class AuthRepo {
   collectionName = 'users';
-  user = sessionStorage.getItem('user');
-  authenticated = !!this.user;
+
+  constructor() {
+    const serializedUser = sessionStorage.getItem('user');
+    if (serializedUser) {
+      this.user = JSON.parse(serializedUser);
+    } else {
+      this.user = null;
+    }
+    this.authenticated = !!this.user;
+  }
 
   /**
    * @param user
@@ -37,6 +45,8 @@ export class AuthRepo {
    * @returns {Object}
    */
   async loadUser(user) {
+    console.log({user});
+
     const doc = await firebase.firestore
       .collection(this.collectionName)
       .doc(user.uid)
