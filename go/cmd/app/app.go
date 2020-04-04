@@ -6,21 +6,25 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"net/http"
 
 	"google.golang.org/grpc"
 
 	rice "github.com/GeertJohan/go.rice"
+	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
 )
 
 type App struct {
-	// router     *httprouter.Router
+	config     *Config
+	router     *httprouter.Router
 	grpcServer *grpc.Server
 	db         *sql.DB
 }
 
 func New(c *Config) (app *App, err error) {
 	app = new(App)
+	app.config = c
 	app.grpcServer = grpc.NewServer()
 	// setup database
 	err = app.dbSetup(c)
@@ -57,12 +61,25 @@ func (a *App) loadAuth() {
 func (a *App) Run() (err error) {
 	ch := make(chan error)
 	go func() {
-		lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 3002))
+		addr := fmt.Sprintf(":%d", a.config.Grpc.Port)
+		lis, err := net.Listen("tcp", addr)
 		if err != nil {
 			ch <- err
 			return
 		}
+		log.Printf("Serving gRPC on %s \n", addr)
 		ch <- a.grpcServer.Serve(lis)
+	}()
+
+	go func() {
+		addr := fmt.Sprintf(":%d", a.config.Http.Port)
+		lis, err := net.Listen("tcp", addr)
+		if err != nil {
+			ch <- err
+			return
+		}
+		log.Printf("Serving Http on %s \n", addr)
+		ch <- http.Serve(lis, a.router)
 	}()
 
 	return <-ch

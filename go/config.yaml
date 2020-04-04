@@ -2,3 +2,9 @@ db:
   host: localhost
   port: 26257
   user: root
+
+grpc:
+  port: 3000
+
+http:
+  port: 3080

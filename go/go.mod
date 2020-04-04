@@ -7,6 +7,7 @@ require (
 	github.com/daaku/go.zipexe v1.0.1 // indirect
 	github.com/golang/protobuf v1.3.5
 	github.com/google/go-cmp v0.3.1 // indirect
+	github.com/julienschmidt/httprouter v1.3.0
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/lib/pq v1.3.0
 	golang.org/x/net v0.0.0-20191109021931-daa7c04131f5 // indirect
