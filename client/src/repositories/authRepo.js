@@ -1,26 +1,40 @@
 import {action, decorate, observable} from "mobx";
-import {UserRepositoryClient} from "../../proto-clients/proto/userRepository_grpc_web_pb.js";
-import {production} from "../../config.json";
+import {useAuth, useFirestore, useFirestoreDocDataOnce} from "reactfire";
 
 export class AuthRepo {
-
+  collectionName = 'user';
   authenticated = true;
   user = null;
 
-  constructor() {
-    this.userRepositoryClient = new UserRepositoryClient(production.grpcEndpoint);
+  /**
+   * @param email
+   * @param password
+   * @returns {Promise<boolean>}
+   */
+  async login(email, password) {
+    this.authenticated = await useAuth().signInWithEmailAndPassword(email, password);
+
+    return true;
   }
 
-  login() {
-    // TODO implement
+  /**
+   * @returns {Promise<boolean>}
+   */
+  async logout() {
+    this.authenticated = await useAuth().signOut();
+
+    return true;
   }
 
-  logout() {
-    // TODO implement
-  }
-
-  loadUser() {
-    // TODO implement
+  /**
+   *
+   * @param userId
+   * @returns {unknown}
+   */
+  loadUser(userId) {
+    return useFirestoreDocDataOnce(
+      useFirestore().collection(this.collectionName).doc(userId)
+    );
   }
 
 }

@@ -1,40 +1,49 @@
-import {action, decorate, observable} from "mobx";
-import {AssignmentRepositoryClient} from "../../proto-clients/proto/assignmentRepository_grpc_web_pb";
-import {production} from "../../config";
+import {action, decorate} from "mobx";
+import {useFirestore, useFirestoreCollectionData} from "reactfire";
 
 export class AssignmentRepo {
-  assignments = new Map();
+  collectionName = 'assignments';
 
-  constructor() {
-    this.assignmentRepoClient = new AssignmentRepositoryClient(production.grpcEndpoint);
+  create(data) {
+    return useFirestore().collection(this.collectionName).set(data);
   }
 
-  create() {
-    // TODO implement
+  delete(assignmentId) {
+    return useFirestore().collection(this.collectionName).doc(assignmentId).delete();
   }
 
-  delete() {
-    // TODO implement
-  }
-
-  update() {
-    // TODO implement
+  update(assignmentId, changes) {
+    return useFirestore().collection(this.collectionName).doc(assignmentId).update(changes);
   }
 
   getAll() {
-    // TODO implement
+    return useFirestoreCollectionData(
+      useFirestore().collection(this.collectionName)
+    );
   }
 
-  getByUser() {
-    // TODO implement
+  getByUser(userId) {
+    return useFirestoreCollectionData(
+      useFirestore()
+        .collection(this.collectionName)
+        .where('user', '==', userId)
+    );
   }
 
-  getByAuthor() {
-    // TODO implement
+  getByAuthor(authorId) {
+    return useFirestoreCollectionData(
+      useFirestore()
+        .collection(this.collectionName)
+        .where('author', '==', authorId)
+    );
   }
 
   getByLesson() {
-    // TODO implement
+    return useFirestoreCollectionData(
+      useFirestore()
+        .collection(this.collectionName)
+        .where('lesson', '==', lessId)
+    );
   }
 }
 
@@ -44,6 +53,5 @@ decorate(AssignmentRepo, {
   delete: action,
   getAll: action,
   getByUser: action,
-  getByLesson: action,
-  assignments: observable
+  getByLesson: action
 });

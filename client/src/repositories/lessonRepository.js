@@ -1,60 +1,25 @@
 import {action, decorate, observable} from "mobx";
-import {production} from "../../config.json"
-import {LessonRepositoryClient} from '../../proto-clients/proto/lessonRepository_grpc_web_pb.js';
+import {useFirestore, useFirestoreCollectionData, useFirestoreDocDataOnce} from "reactfire";
 
 export class LessonRepository {
-  lessons = new Map();
-  lessonRepoClient = new LessonRepositoryClient(production.grpcEndpoint);
+  collectionName = 'lessons';
 
   /**
-   * @method create
    *
-   * @param {any} lesson
-   *
-   * @returns {Promise<Lesson>}
+   * @param data
+   * @returns {*}
    */
-  create(lesson) {
-    return new Promise((resolve, reject) => {
-      this.lessonRepoClient.createLesson(
-        lesson,
-        this.authRepository.metadata,
-        (err, response) => {
-          if (!err) {
-            resolve(response);
-            this.lessons.set(response.id, response);
-
-            return;
-          }
-
-          reject(err);
-        }
-      )
-    });
+  create(data) {
+    return useFirestore().collection(this.collectionName).set(data);
   }
 
   /**
-   * @method delete
    *
-   * @param {string} lessonId
-   *
-   * @returns {Promise<Boolean>}
+   * @param lessonId
+   * @returns {Promise<void>}
    */
   delete(lessonId) {
-    return new Promise((resolve, reject) => {
-      this.lessonRepoClient.deleteLesson(
-        lesson,
-        this.authRepository.metadata,
-        (err, response) => {
-          if (!err) {
-            this.lessons.delete(lessonId);
-            resolve(response);
-
-            return;
-          }
-
-          reject(err);
-        })
-    });
+    return useFirestore().collection(this.collectionName).doc(lessonId).delete();
   }
 
   /**
@@ -66,74 +31,56 @@ export class LessonRepository {
    * @returns {Promise<Boolean>}
    */
   addAssignment(lessonId, assignmentId) {
-    return new Promise((resolve, reject) => {
-      this.lessonRepoClient.addAssignment(
-        {
-          lesson: lessonId,
-          assignment: assignmentId
-        },
-        this.authRepository.metadata,
-        (err, response) => {
-          if (!err) {
-            this.lessons.set(lessonId, response);
-            resolve(response);
-
-            return;
-          }
-
-          reject(err);
-        })
-    });
+    // TODO: Little bit more logic required to update Array
+    return useFirestore().collection(this.collectionName).doc(lessonId).update({assignments: assignmentId})
   }
 
   /**
+   *
+   * @param lessonId
    * @param assignmentId
-   * @returns {Promise<Boolean>}
+   * @returns {Promise<void>}
    */
-  deleteAssignment(assignmentId) {
-    return new Promise((resolve, reject) => {
-      this.lessonRepoClient.deleteAssignment(
-        {
-          assignment: assignmentId
-        },
-        this.authRepository.metadata,
-        (err, response) => {
-          if (!err) {
-            // TODO: update lessons
-
-            resolve(response);
-
-            return;
-          }
-
-          reject(err);
-        })
-    });
+  deleteAssignment(lessonId, assignmentId) {
+    // TODO: Little bit more logic required to update Array
+    return useFirestore().collection(this.collectionName).doc(lessonId).set({assignments: 0})
   }
 
   /**
-   * @param filter
-   * @returns {Promise<Lesson[]>}
+   *
+   * @param lessonId
+   * @returns {any}
    */
-  getLessons(filter) {
-    return new Promise((resolve, reject) => {
-      this.lessonRepoClient.deleteAssignment(
-        filter,
-        this.authRepository.metadata,
-        (err, response) => {
-          if (!err) {
-            resolve(response);
+  getLessonById(lessonId) {
+    return useFirestoreDocDataOnce(
+      useFirestore().collection(this.collectionName).doc(lessonId)
+    );
+  }
 
-            response.forEach(lesson => {
-              this.lessons.set(lesson.id, lesson);
-            });
+  /**
+   *
+   * @param userId
+   * @returns {any | {[p: string]: any}[]}
+   */
+  getLessonsByUser(userId) {
+    return useFirestoreCollectionData(
+      useFirestore()
+        .collection(this.collectionName)
+        .where('users', 'array-contains', userId)
+    );
+  }
 
-            return;
-          }
-
-          reject(err);
-        })
-    });
+  /**
+   *
+   * @param userId
+   * @returns {any | {[p: string]: any}[]}
+   */
+  getLessonsByTeacher(userId) {
+    return useFirestoreCollectionData(
+      useFirestore()
+        .collection(this.collectionName)
+        .where('teacher', '==', userId)
+    );
   }
 }
 
@@ -144,6 +91,5 @@ decorate(LessonRepository, {
   delete: action,
   getAll: action,
   get: action,
-  getLessonsByUser: action,
-  lessons: observable
+  getLessonsByUser: action
 });
