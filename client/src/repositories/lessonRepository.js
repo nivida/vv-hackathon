@@ -1,6 +1,6 @@
 import {action, decorate, observable} from "mobx";
-import {production} from "../../config.json"
-import {LessonRepositoryClient} from '../../proto-clients/proto/lessonRepository_grpc_web_pb.js';
+import {production} from "../config.json"
+import {LessonRepositoryClient} from 'proto-clients/proto/lessonRepository_grpc_web_pb.js';
 
 export class LessonRepository {
   lessons = new Map();
@@ -42,7 +42,7 @@ export class LessonRepository {
   delete(lessonId) {
     return new Promise((resolve, reject) => {
       this.lessonRepoClient.deleteLesson(
-        lesson,
+        lessonId,
         this.authRepository.metadata,
         (err, response) => {
           if (!err) {

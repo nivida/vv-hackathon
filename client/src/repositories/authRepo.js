@@ -1,6 +1,6 @@
 import {action, decorate, observable} from "mobx";
-import {UserRepositoryClient} from "../../proto-clients/proto/userRepository_grpc_web_pb.js";
-import {production} from "../../config.json";
+import {UserRepositoryClient} from "proto-clients/proto/userRepository_grpc_web_pb.js";
+import {production} from "../config.json";
 
 export class AuthRepo {
 

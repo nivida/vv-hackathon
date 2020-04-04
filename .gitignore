@@ -1,5 +1,5 @@
 .vscode
-client/proto-clients
+proto-clients/proto
 go/proto
 .idea
 

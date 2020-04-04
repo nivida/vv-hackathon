@@ -10,11 +10,14 @@
     "antd": "^4.1.0",
     "babel-plugin-import": "^1.13.0",
     "customize-cra": "^0.9.1",
+    "google-protobuf": "^3.11.4",
+    "grpc-web": "^1.0.7",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "mobx": "^5.15.4",
     "mobx-react-lite": "^1.5.2",
     "node-sass": "^4.13.1",
+    "proto-clients": "../proto-clients",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.5",
     "react-dom": "^16.13.1",
@@ -27,7 +30,7 @@
     "build": "npm run build:proto && react-app-rewired build",
     "test": "npm run build:proto && react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "build:proto": "./scripts/proto3.sh"
+    "build:proto": "sh -c 'cd ../proto-clients && ./proto3.sh'"
   },
   "eslintConfig": {
     "extends": "react-app"
