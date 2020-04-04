@@ -7,7 +7,7 @@ import {Button, Col, Input, Row, Table} from "antd";
 import {EditOutlined, PlusOutlined} from "@ant-design/icons";
 import DeleteButton from "../../shared/DeleteButton";
 import {LessonRepository} from "../../../repositories/lessonRepository";
-import Add from "./Add";
+import LessonForm from "./LessonForm";
 
 const LessonsTable = (props) => {
   const repo = new LessonRepository();
@@ -66,7 +66,7 @@ const LessonsTable = (props) => {
     <div>
       <Row type={'flex'} justify={'space-between'}>
         <Col>
-          <Add />
+          <LessonForm />
         </Col>
         <Col>
           <Input.Search

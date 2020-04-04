@@ -1,15 +1,9 @@
 import * as React from "react";
 import {Observer} from 'mobx-react-lite';
 import {Modal, Button, Form, Input, TimePicker, DatePicker, Select} from 'antd';
-import moment from 'moment';
 import {AssignmentRepo} from "../../../repositories/assignmentRepo";
 
-const assignments = [];
-for (let i = 10; i < 36; i++) {
-  assignments.push(<Select.Option key={i.toString(36) + i}>{i.toString(36) + i}</Select.Option>);
-}
-
-export default class Add extends React.Component {
+export default class LessonForm extends React.Component {
   layout = {
     labelCol: {
       span: 8,
@@ -19,8 +13,11 @@ export default class Add extends React.Component {
     },
   };
 
+  tailLayout = {
+    wrapperCol: { offset: 8, span: 16 },
+  };
+
   state = {
-    assignments: [],
     ModalText: 'Content of the modal',
     ModalTitle: 'Add Lesson',
     visible: false,
@@ -34,48 +31,27 @@ export default class Add extends React.Component {
     });
   };
 
-  handleOk = () => {
+  handleSubmit = (values) => {
     this.setState({
       ModalText: 'The modal will be closed after two seconds',
-      confirmLoading: true,
+      visible: false,
     });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        confirmLoading: false,
-      });
-    }, 2000);
+
+    this.onSubmit(values);
   };
 
   handleCancel = () => {
-    console.log('Clicked cancel button');
     this.setState({
       visible: false,
     });
   };
 
-  onFinish = (values) => {
-
-  };
-
-  onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
-
-  onStartTimeChange = () => {
-
-  };
-
-  onEndTimeChange = () => {
-
-  };
-
-  onAssignmentsChange = () => {
+  onSubmit = (values) => {
 
   };
 
   render() {
-    const {visible, confirmLoading, ModalText, ModalTitle} = this.state;
+    const {visible, confirmLoading, ModalTitle} = this.state;
     return (
       <Observer>
         {
@@ -88,18 +64,14 @@ export default class Add extends React.Component {
                 <Modal
                   title={ModalTitle}
                   visible={visible}
-                  onOk={this.handleOk}
+                  footer={null}
                   confirmLoading={confirmLoading}
-                  onCancel={this.handleCancel}
                 >
                   <Form
                     {...this.layout}
-                    name="basic"
-                    initialValues={{
-                      remember: true,
-                    }}
-                    onFinish={this.onFinish}
-                    onFinishFailed={this.onFinishFailed}
+                    name="lesson"
+                    onFinish={this.handleSubmit}
+                    onFinishFailed={this.handleCancel}
                   >
                     <Form.Item
                       label="Title"
@@ -111,7 +83,7 @@ export default class Add extends React.Component {
                         },
                       ]}
                     >
-                      <Input />
+                      <Input/>
                     </Form.Item>
 
                     <Form.Item
@@ -129,7 +101,6 @@ export default class Add extends React.Component {
 
                     <Form.Item
                       label="Start"
-                      name="start"
                       rules={[
                         {
                           required: true,
@@ -137,13 +108,16 @@ export default class Add extends React.Component {
                         },
                       ]}
                     >
-                      <DatePicker defaultValue={moment('2015-01-01', 'YYYY-MM-DD')} />
-                      <TimePicker onChange={this.onStartTimeChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+                       <Form.Item name="startDate">
+                         <DatePicker/>
+                       </Form.Item>
+                       <Form.Item name="startTime">
+                         <TimePicker/>
+                       </Form.Item>
                     </Form.Item>
 
                     <Form.Item
                       label="End"
-                      name="end"
                       rules={[
                         {
                           required: true,
@@ -151,13 +125,17 @@ export default class Add extends React.Component {
                         },
                       ]}
                     >
-                      <DatePicker defaultValue={moment('2015-01-01', 'YYYY-MM-DD')} />
-                      <TimePicker onChange={this.onEndTimeChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+                      <Form.Item name="endDate">
+                        <DatePicker/>
+                      </Form.Item>
+                      <Form.Item name="endTime">
+                        <TimePicker/>
+                      </Form.Item>
                     </Form.Item>
 
                     <Form.Item
                       label="Assignments:"
-                      name="end"
+                      name="assignments"
                       rules={[
                         {
                           required: true,
@@ -167,13 +145,16 @@ export default class Add extends React.Component {
                     >
                       <Select
                         mode="multiple"
-                        style={{ width: '100%' }}
+                        style={{width: '100%'}}
                         placeholder="Please select"
-                        defaultValue={['a10', 'c12']}
-                        onChange={this.onAssignmentsChange}
                       >
-                        {assignments}
+                        <Select.Option value="Assignment1">Assignment1</Select.Option>
                       </Select>
+                    </Form.Item>
+                    <Form.Item {...this.tailLayout}>
+                      <Button type="primary" htmlType="submit">
+                        Submit
+                      </Button>
                     </Form.Item>
                   </Form>
                 </Modal>
