@@ -150,7 +150,9 @@ export default class LessonForm extends React.Component {
                         style={{width: '100%'}}
                         placeholder="Please select"
                       >
-                        <Select.Option value="Student1">Student1</Select.Option>
+                        {(this.props.students) ? this.props.students.map(student => (
+                          <Select.Option key={student.id}
+                                         value={student.id}>{student.id}</Select.Option>)) : null}
                       </Select>
                     </Form.Item>
                     <Form.Item {...this.tailLayout}>

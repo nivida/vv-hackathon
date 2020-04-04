@@ -11,7 +11,7 @@ const Add = () => {
 
   useEffect(() => {
     store.assignmentRepo.getAll().then(setAssignments);
-    // store.userRepo.getAllStudents().then(setStudents);
+    store.userRepo.getUsersByRole('student').then(setStudents);
   }, []);
 
   const handleSubmit = (values) => {
