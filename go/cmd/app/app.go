@@ -8,11 +8,11 @@ import (
 	"net"
 	"net/http"
 
-	"google.golang.org/grpc"
-
 	rice "github.com/GeertJohan/go.rice"
+	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
+	"google.golang.org/grpc"
 )
 
 type App struct {
@@ -80,6 +80,8 @@ func (a *App) Run() (err error) {
 			return
 		}
 		log.Printf("Serving Http on %s \n", addr)
+		a.router.Handler("*", "/api/webgrpc", grpcweb.WrapServer(a.grpcServer))
+		a.router.Handler("*", "/api/grpc", a.grpcServer)
 		ch <- http.Serve(lis, a.router)
 	}()
 
