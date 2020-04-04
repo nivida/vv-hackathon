@@ -1,12 +1,19 @@
 import {Avatar, Dropdown, Menu} from "antd";
 import * as React from "react";
+import {useContext} from "react";
 import avatar from "./../../assets/images/avatar.png";
 import {LogoutOutlined} from "@ant-design/icons";
+import {StoreContext} from "../../repositories/rootRepo";
+import {observer} from "mobx-react-lite";
 
 const Account = (props) => {
 
+  const store = useContext(StoreContext);
+
   const logout = () => {
-    // TODO implement
+    store.authRepo.logout().then(() => {
+      console.log('logged out', !store.authRepo.authenticated);
+    });
   };
 
   const menu = (
@@ -30,4 +37,4 @@ const Account = (props) => {
   )
 };
 
-export default Account;
+export default observer(Account);

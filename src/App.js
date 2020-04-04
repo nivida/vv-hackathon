@@ -6,19 +6,20 @@ import {Route, Switch} from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import ProtectedApp from "./ProtectedApp";
 import Login from "./components/login/Login";
+import {observer} from "mobx-react-lite";
 
 function App() {
-    return (
-        <Router>
-            <ErrorBoundary>
-                <ScrollToTop/>
-                <Switch>
-                    <Route path={`/login`} component={Login}/>
-                    <ProtectedRoute path={`/`} component={ProtectedApp}/>
-                </Switch>
-            </ErrorBoundary>
-        </Router>
-    );
+  return (
+    <Router>
+      <ErrorBoundary>
+        <ScrollToTop/>
+        <Switch>
+          <Route path={`/login`} component={Login}/>
+          <ProtectedRoute path={`/`} component={ProtectedApp}/>
+        </Switch>
+      </ErrorBoundary>
+    </Router>
+  );
 }
 
-export default App;
+export default observer(App);
