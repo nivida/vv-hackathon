@@ -17,8 +17,8 @@ const LessonItem = ({lesson, ...props}) => {
           <p style={{
             fontWeight: 'bold',
             margin: 0
-          }}>{`${moment.unix(lesson.startsAt.seconds).format(timeFormat)} - ${moment.unix(lesson.endsAt.seconds).format(timeFormat)}`}</p>
-          <h2 style={{margin: 0}}>{lesson.name}</h2>
+          }}>{`${moment.unix(lesson.start).format(timeFormat)} - ${moment.unix(lesson.end).format(timeFormat)}`}</p>
+          <h2 style={{margin: 0}}>{lesson.title}</h2>
         </Col>
         {expanded ? (
           <Col span={24}>
