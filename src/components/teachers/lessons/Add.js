@@ -35,7 +35,8 @@ const Add = () => {
     <Button type="primary" icon={<PlusOutlined/>} onClick={() => setIsVisible(true)}>
       Add
     </Button>
-    {isVisible ? <LessonForm onCancel={() => setIsVisible(false)}
+    {isVisible ? <LessonForm title={'Add Lesson'}
+                             onCancel={() => setIsVisible(false)}
                              onSubmit={handleSubmit}
                              assignments={assignments}
                              students={students}/> : null}

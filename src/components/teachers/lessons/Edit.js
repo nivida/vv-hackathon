@@ -1,9 +1,10 @@
 import {observer} from "mobx-react-lite";
 import * as React from "react";
+import {useContext, useEffect, useState} from "react";
 import LessonForm from "./LessonForm";
 import {StoreContext} from "../../../repositories/rootRepo";
-import {useContext, useEffect, useState} from "react";
-import {Button} from "antd";
+import {Button, message} from "antd";
+import moment from "moment";
 
 const Edit = (props) => {
   const store = useContext(StoreContext);
@@ -21,18 +22,37 @@ const Edit = (props) => {
   }, [isVisible]);
 
   const handleSubmit = (values) => {
-    store.lessonRepository.update(props.lesson, values).then(console.log);
+    values.start = values.start.toDate().getTime();
+    values.end = values.end.toDate().getTime();
+    store.lessonRepository.update(props.lesson, values).then((resp) => {
+      console.log(resp);
+      setIsVisible(false);
+      message.success('successfully updated lesson!');
+    });
   };
+
+  console.log({lesson});
+
+  const initialValues = lesson ? {
+    ...lesson,
+    start: moment.unix(lesson.start / 1000),
+    end: moment.unix(lesson.end / 1000)
+  } : null;
 
   return (
     <div>
-      <Button type="primary" onClick={() => {setIsVisible(true)}}>
+      <Button type="primary" onClick={() => {
+        setIsVisible(true)
+      }}>
         Edit
       </Button>
-
-      {(isVisible && lesson) ?
-      <LessonForm buttonName="Edit" onSubmit={handleSubmit} assignments={assignments} students={students}
-                  lesson={lesson}/> : null}
+      {(isVisible && lesson && assignments) ?
+        <LessonForm title={'Edit Lesson'}
+                    onCancel={() => setIsVisible(false)}
+                    onSubmit={handleSubmit}
+                    assignments={assignments}
+                    students={students}
+                    lesson={initialValues}/> : null}
     </div>
   )
 };
