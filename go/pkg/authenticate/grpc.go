@@ -2,17 +2,23 @@ package grpc
 
 import (
 	"context"
-	"strings"
+	"log"
 
 	"github.com/nivida/vv-hackathon/go/pkg/userlogin"
 	"golang.org/x/xerrors"
+	"google.golang.org/grpc/metadata"
 )
 
-type Auth struct{}
+type AuthGrpc struct{}
 
-func (a *Auth) Check(ctx context.Context) (*userlogin.Login, error) {
-	authVal := ctx.Value("Authentication").(string)
-	authMethod := strings.Split(authVal, " ")
+func (a *AuthGrpc) Check(ctx context.Context) (*userlogin.Login, error) {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return nil, xerrors.New("Failed reading metadata")
+	}
+	authVal := md.Get("Authentication")
+	log.Println(authVal)
+	authMethod := authVal //strings.Split(authVal, " ")
 	if len(authMethod) < 2 {
 		return nil, xerrors.New("No authentication given.")
 	}
@@ -27,7 +33,7 @@ func (a *Auth) Check(ctx context.Context) (*userlogin.Login, error) {
 	return nil, xerrors.New("Invalid authentication method")
 }
 
-func (a *Auth) demo(context.Context) (*userlogin.Login, error) {
+func (a *AuthGrpc) demo(context.Context) (*userlogin.Login, error) {
 	return &userlogin.Login{
 		UserType: "demo",
 		Groups: []interface{}{
@@ -35,10 +41,10 @@ func (a *Auth) demo(context.Context) (*userlogin.Login, error) {
 		},
 	}, nil
 }
-func (a *Auth) bearer(context.Context) (*userlogin.Login, error) {
+func (a *AuthGrpc) bearer(context.Context) (*userlogin.Login, error) {
 	return nil, xerrors.New("not implemented yet")
 }
 
-func (a *Auth) basic(context.Context) (*userlogin.Login, error) {
+func (a *AuthGrpc) basic(context.Context) (*userlogin.Login, error) {
 	return nil, xerrors.New("not implemented yet")
 }

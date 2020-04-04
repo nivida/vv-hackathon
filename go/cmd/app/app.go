@@ -6,22 +6,25 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"net/http"
 
-	"golang.org/x/xerrors"
 	"google.golang.org/grpc"
 
 	rice "github.com/GeertJohan/go.rice"
+	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
 )
 
 type App struct {
-	// router     *httprouter.Router
+	config     *Config
+	router     *httprouter.Router
 	grpcServer *grpc.Server
 	db         *sql.DB
 }
 
 func New(c *Config) (app *App, err error) {
 	app = new(App)
+	app.config = c
 	app.grpcServer = grpc.NewServer()
 	// setup database
 	err = app.dbSetup(c)
@@ -54,18 +57,30 @@ func (a *App) dbSetup(c *Config) error {
 func (a *App) loadAuth() {
 
 }
-func (a *App) GetGrpc() *grpc.Server {
-	return a.grpcServer
-}
 
-func (a *App) LoadModule() error {
-	return xerrors.New("not implemented")
-}
-func (a *App) Run() error {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 3002))
-	if err != nil {
-		return err
-	}
+func (a *App) Run() (err error) {
+	ch := make(chan error)
+	go func() {
+		addr := fmt.Sprintf(":%d", a.config.Grpc.Port)
+		lis, err := net.Listen("tcp", addr)
+		if err != nil {
+			ch <- err
+			return
+		}
+		log.Printf("Serving gRPC on %s \n", addr)
+		ch <- a.grpcServer.Serve(lis)
+	}()
 
-	return a.grpcServer.Serve(lis)
+	go func() {
+		addr := fmt.Sprintf(":%d", a.config.Http.Port)
+		lis, err := net.Listen("tcp", addr)
+		if err != nil {
+			ch <- err
+			return
+		}
+		log.Printf("Serving Http on %s \n", addr)
+		ch <- http.Serve(lis, a.router)
+	}()
+
+	return <-ch
 }

@@ -22,6 +22,7 @@ services:
       dockerfile: docker/backend/Dockerfile
     command: -config=/app/config.yaml
     ports:
+      - "4280:3080"
       - "4242:3000"
     networks:
       cockroachdb_net:
