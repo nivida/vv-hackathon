@@ -4,6 +4,7 @@ import {LessonRepository} from "./lessonRepository";
 import {AssignmentRepo} from "./assignmentRepo";
 import {UserRepo} from "./userRepo";
 import {ExerciseRepo} from "./exerciseRepo";
+import {MaterialRepo} from "./materialRepo";
 
 export class RootRepo {
   constructor() {
@@ -11,6 +12,7 @@ export class RootRepo {
     this.assignmentRepo = new AssignmentRepo();
     this.exerciseRepo = new ExerciseRepo();
     this.lessonRepository = new LessonRepository();
+    this.materialRepo = new MaterialRepo();
     this.userRepo = new UserRepo();
   }
 }
