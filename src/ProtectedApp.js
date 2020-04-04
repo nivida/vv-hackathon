@@ -5,7 +5,7 @@ import TeacherApp from "./TeacherApp";
 
 const ProtectedApp = (props) => {
 
-  const userType = UserTypes.student;
+  const userType = UserTypes.teacher;
 
   if (userType === UserTypes.student) {
     return <StudentApp/>
