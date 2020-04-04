@@ -43,7 +43,7 @@ const LessonsTable = (props) => {
         <div>
           <Edit lesson={lesson.id} onEditSuccess={loadData}/>
           <DeleteButton onConfirm={() => {
-            store.lessonRepository.delete(lesson.id)
+            store.lessonRepository.delete(lesson.id).then(loadData)
           }}/>
         </div>
       ),
