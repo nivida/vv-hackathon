@@ -12,6 +12,7 @@
     "customize-cra": "^0.9.1",
     "google-protobuf": "^3.11.4",
     "grpc-web": "^1.0.7",
+    "handwritten-mathematics-recogniser": "0.0.6",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "mobx": "^5.15.4",
@@ -20,11 +21,13 @@
     "proto-clients": "../proto-clients",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.5",
+    "react-canvas-draw": "^1.1.0",
     "react-dom": "^16.13.1",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1"
   },
+  "proxy": "http://localhost:4280",
   "scripts": {
     "start": "npm run build:proto && react-app-rewired start",
     "build": "npm run build:proto && react-app-rewired build",
