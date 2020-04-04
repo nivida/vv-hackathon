@@ -1,25 +1,28 @@
 import * as React from "react";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Redirect} from "react-router";
 import "./Login.scss";
 import LoginForm from "./LoginForm";
 import BlankLayout from "../shared/BlankLayout";
 import {observer} from "mobx-react-lite";
-import {useContext} from "react";
 import {StoreContext} from "../../repositories/rootRepo";
+import {message} from "antd";
 
 const Login = (props) => {
 
-  const [errors, setErrors] = useState({});
   const [login, setLogin] = useState({});
 
   const store = useContext(StoreContext);
 
   const onSubmit = (user) => {
     setLogin(user);
-    setErrors({});
 
-    store.authRepo.login(user);
+    store.authRepo.login(user).then((user) => {
+      console.log(user);
+      store.authRepo.loadUser(user);
+    }).catch(err => {
+      message.error(err.message);
+    });
   };
 
   if (store.authRepo.authenticated) {
@@ -29,7 +32,7 @@ const Login = (props) => {
   return <BlankLayout>
     <div className={'container'}>
       <div className={'content'}>
-        <LoginForm onSubmit={onSubmit} errors={errors} login={login}/>
+        <LoginForm onSubmit={onSubmit} login={login}/>
       </div>
     </div>
   </BlankLayout>

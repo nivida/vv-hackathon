@@ -1,21 +1,31 @@
 import {firebase} from '../Firebase.js';
 import {action, decorate, observable} from "mobx";
-import {querySnapToDataArray} from "../Firebase";
 
 export class AuthRepo {
-  collectionName = 'user';
-  authenticated = true;
-  user = null;
+  collectionName = 'users';
+
+  constructor() {
+    const serializedUser = sessionStorage.getItem('user');
+    if (serializedUser) {
+      this.user = JSON.parse(serializedUser);
+    } else {
+      this.user = null;
+    }
+    this.authenticated = !!this.user;
+  }
 
   /**
    * @param user
-   * @returns {Promise<boolean>}
+   * @returns {Promise<User>}
    */
   async login(user) {
-    await firebase.auth.signInWithEmailAndPassword(user.email, user.password);
-    this.authenticated = true;
+    const credential = await firebase.auth.signInWithEmailAndPassword(user.email, user.password);
+    this.user = credential.user;
+    this.authenticated = !!this.user;
 
-    return this.authenticated;
+    sessionStorage.setItem('user', JSON.stringify(this.user));
+
+    return this.user;
   }
 
   /**
@@ -24,6 +34,8 @@ export class AuthRepo {
   async logout() {
     await firebase.auth.signOut();
     this.authenticated = false;
+    this.user = null;
+    sessionStorage.removeItem('user');
 
     return true;
   }
@@ -33,12 +45,16 @@ export class AuthRepo {
    * @returns {Object}
    */
   async loadUser(user) {
-    return querySnapToDataArray(
-      await firebase.firestore
-        .collection(this.collectionName)
-        .where('user', '==', user.id)
-        .get()
-    )[0];
+    console.log({user});
+
+    const doc = await firebase.firestore
+      .collection(this.collectionName)
+      .doc(user.uid)
+      .get();
+    const record = doc.data();
+    this.user = {...this.user, ...record};
+    console.log(record);
+    return this.user;
   }
 }
 

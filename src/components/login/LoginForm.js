@@ -4,14 +4,14 @@ import {ValidationRules} from "../../utils/validationRules";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 
-const LoginForm = (props) => {
+const LoginForm = ({onSubmit}) => {
 
-  const handleSubmit = (e) => {
-    // TODO implement
+  const handleSubmit = (values) => {
+    onSubmit && onSubmit(values)
   };
 
   return (
-    <Form onSubmit={handleSubmit} className="login-form">
+    <Form onFinish={handleSubmit} className="login-form">
       <h1 style={{textAlign: 'center', marginBottom: 25}}>Open Education Server</h1>
       <Form.Item name={'email'} rules={[
         ValidationRules.email,
