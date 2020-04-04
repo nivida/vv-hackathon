@@ -4,3 +4,11 @@
 .ant-timeline-item-tail {
   border-left-color: #cccccc;
 }
+
+.ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after {
+  background-color: #d2d2d2 !important;
+}
+
+.ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after {
+  background-color: #d2d2d2 !important;
+}
