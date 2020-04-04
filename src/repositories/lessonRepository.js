@@ -1,4 +1,4 @@
-import {action, decorate, observable} from "mobx";
+import {action, decorate} from "mobx";
 import {useFirestore, useFirestoreCollectionData, useFirestoreDocDataOnce} from "reactfire";
 
 export class LessonRepository {

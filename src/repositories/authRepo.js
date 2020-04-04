@@ -3,7 +3,7 @@ import {useAuth, useFirestore, useFirestoreDocDataOnce} from "reactfire";
 
 export class AuthRepo {
   collectionName = 'user';
-  authenticated = true;
+  authenticated = false;
   user = null;
 
   /**
