@@ -6,6 +6,8 @@ import {AssignmentRepo} from "../../../repositories/assignmentRepo";
 
 const LessonDetails = ({lesson, style = {}}) => {
   const repo =  new AssignmentRepo();
+  repo.create({content: 'asdfa'}).then(console.log);
+
   console.log(repo.getAll().then(console.log).catch(console.log));
 
   const assignments = [

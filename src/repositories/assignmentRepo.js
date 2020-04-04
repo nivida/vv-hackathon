@@ -7,6 +7,7 @@ export class AssignmentRepo {
   create(data) {
     return firebase.firestore
       .collection(this.collectionName)
+      .doc()
       .set(data);
   }
 
@@ -45,8 +46,8 @@ export class AssignmentRepo {
     return querySnapToDataArray(
       await firebase.firestore
         .collection(this.collectionName)
-        .where('author', '==', authorId).
-        get()
+        .where('author', '==', authorId)
+        .get()
     );
   }
 

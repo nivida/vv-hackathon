@@ -12,6 +12,7 @@ export class LessonRepository {
   create(data) {
     return firebase.firestore
       .collection(this.collectionName)
+      .doc()
       .set(data);
   }
 
@@ -54,7 +55,7 @@ export class LessonRepository {
     return firebase.firestore
       .collection(this.collectionName)
       .doc(lessonId)
-      .set({assignments: 0})
+      .update({assignments: 0})
   }
 
   /**
