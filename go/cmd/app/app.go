@@ -4,9 +4,10 @@ import (
 	"database/sql"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/gorilla/mux"
@@ -25,18 +26,40 @@ type App struct {
 func New(c *Config) (app *App, err error) {
 	app = new(App)
 	app.config = c
-	app.grpcServer = grpc.NewServer()
 	app.router = mux.NewRouter()
+	err = app.grpcSetup()
+	if err != nil {
+		return app, err
+	}
 	// setup database
 	err = app.dbSetup(c)
 	return app, err
 }
 
-func (a *App) grpcSetup(c *Config) error {
+func (a *App) grpcSetup() error {
+	// TODO: SSL/TLS credentials
 	a.grpcServer = grpc.NewServer()
+
+	webgrpc := grpcweb.WrapServer(a.grpcServer,
+		grpcweb.WithAllowedRequestHeaders(
+			[]string{"*"}),
+		grpcweb.WithAllowNonRootResource(true),
+		grpcweb.WithCorsForRegisteredEndpointsOnly(false),
+		grpcweb.WithOriginFunc(func(s string) bool {
+			return true
+		}),
+	)
+	a.router.NewRoute().
+		Subrouter().
+		PathPrefix("/api/webgrpc/").
+		Handler(webgrpc)
+	a.router.NewRoute().
+		PathPrefix("/api/grpc/").
+		HandlerFunc(a.grpcServer.ServeHTTP)
 	return nil
 }
 func (a *App) dbSetup(c *Config) error {
+	// TODO: move Rice-things to one folder
 	files := rice.MustFindBox("../../assets")
 	sqlFile, err := files.Open("sql/v1/base.sql")
 	if err != nil {
@@ -80,11 +103,6 @@ func (a *App) Run() (err error) {
 			return
 		}
 		log.Printf("Serving Http on %s \n", addr)
-		webgrpc := grpcweb.WrapServer(a.grpcServer, grpcweb.WithAllowedRequestHeaders(
-			[]string{"*"}))
-		grpcRoute := a.router.NewRoute()
-		grpcRoute.Path("/api/webgrpc")
-		grpcRoute.Handler(webgrpc)
 		ch <- http.Serve(lis, a.router)
 	}()
 
@@ -95,9 +113,7 @@ func withCORS(handler http.Handler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		//Allow CORS here By * or specific origin
 		w.Header().Set("Access-Control-Allow-Origin", "*")
-
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-
 		handler.ServeHTTP(w, r)
 	}
 }

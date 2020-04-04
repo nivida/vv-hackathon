@@ -5,9 +5,10 @@ import (
 	"net/http"
 )
 
-type helloHttp struct {
+type helloHTTP struct {
 }
 
-func (h *helloHttp) SayHello(w http.ResponseWriter, r *http.Request) {
+//SayHello handler gRPC-Request
+func (h *helloHTTP) SayHello(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hi dude")
 }

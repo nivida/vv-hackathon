@@ -9,11 +9,13 @@ import (
 type Module struct {
 }
 
+//Load appends functions to app's gRPC- and Http-Server
 func (m *Module) Load(a module.AppInterface) error {
 	// http
-	http := new(helloHttp)
-	a.GetRouter().NewRoute().PathPrefix("/hello").HandlerFunc(http.SayHello)
-	log.Infof("hallooo1", a.GetRouter())
+	http := new(helloHTTP)
+	a.GetRouter().NewRoute().
+		PathPrefix("/hello").
+		HandlerFunc(http.SayHello)
 
 	log.Infof("Registering route \n")
 	// grpc

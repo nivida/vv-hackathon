@@ -2,6 +2,7 @@ package lessons
 
 import (
 	"context"
+	"database/sql"
 
 	assignmentRepository "github.com/nivida/vv-hackathon/go/proto/assignmentRepository"
 	pb "github.com/nivida/vv-hackathon/go/proto/lessonRepository"
@@ -9,9 +10,28 @@ import (
 	"golang.org/x/xerrors"
 )
 
-type grpcLessons struct{}
+type grpcLessons struct {
+	db *sql.DB
+}
 
-func (s *grpcLessons) GetLessons(context.Context, *pb.Filter) (*pb.Lesson, error) {
+func (s *grpcLessons) GetLessons(ctx context.Context, f *pb.Filter) (*pb.Lesson, error) {
+	conn, err := s.db.Conn(ctx)
+	if err != nil {
+		return nil, err
+	}
+	stmt, err := conn.PrepareContext(ctx, `
+		SELECT * 
+		FROM lessons`)
+	if err != nil {
+		return nil, err
+	}
+	rows, err := stmt.Query()
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		rows.Scan()
+	}
 	return nil, xerrors.New("not implemented yet")
 }
 func (s *grpcLessons) CreateLesson(context.Context, *pb.Lesson) (*pb.Lesson, error) {

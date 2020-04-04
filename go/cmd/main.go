@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"log"
 	"os"
 
 	"github.com/nivida/vv-hackathon/go/cmd/app"
@@ -13,13 +12,12 @@ import (
 
 func main() {
 
+	var config app.Config
+	// Load Config
+	// TODO: may use framework with defaults
 	cfgFile := flag.String("config", "./config.yaml", "Path to config file")
-
 	flag.Parse()
 
-	// TODO: read init-config
-	var config app.Config
-	log.Println(os.Getwd())
 	f, err := os.Open(*cfgFile)
 	if err != nil {
 		panic(err)
@@ -29,16 +27,16 @@ func main() {
 		panic(err)
 	}
 
-	// TODO: create app
-	vv, err := app.New(&config)
+	// Create application
+	server, err := app.New(&config)
 	if err != nil {
 		panic(err)
 	}
 
 	// Adding Modules
-	vv.LoadModule(new(hello.Module))
-	vv.LoadModule(new(lessons.Module))
+	server.LoadModule(new(hello.Module))
+	server.LoadModule(new(lessons.Module))
 
-	// TODO: run
-	panic(vv.Run())
+	// run
+	panic(server.Run())
 }
