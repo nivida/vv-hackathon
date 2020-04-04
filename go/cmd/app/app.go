@@ -9,15 +9,15 @@ import (
 	"net/http"
 
 	rice "github.com/GeertJohan/go.rice"
+	"github.com/gorilla/mux"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
-	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 )
 
 type App struct {
 	config     *Config
-	router     *httprouter.Router
+	router     *mux.Router
 	grpcServer *grpc.Server
 	db         *sql.DB
 }
@@ -26,7 +26,7 @@ func New(c *Config) (app *App, err error) {
 	app = new(App)
 	app.config = c
 	app.grpcServer = grpc.NewServer()
-	app.router = httprouter.New()
+	app.router = mux.NewRouter()
 	// setup database
 	err = app.dbSetup(c)
 	return app, err
@@ -82,16 +82,9 @@ func (a *App) Run() (err error) {
 		log.Printf("Serving Http on %s \n", addr)
 		webgrpc := grpcweb.WrapServer(a.grpcServer, grpcweb.WithAllowedRequestHeaders(
 			[]string{"*"}))
-		a.router.Handler("GET", "/api/webgrpc", webgrpc)
-		a.router.Handler("HEAD", "/api/webgrpc", webgrpc)
-		a.router.Handler("POST", "/api/webgrpc", webgrpc)
-		a.router.Handler("PUT", "/api/webgrpc", webgrpc)
-		a.router.Handler("PATCH", "/api/webgrpc", webgrpc)
-		a.router.Handler("DELETE", "/api/webgrpc", webgrpc)
-		a.router.Handler("CONNECT", "/api/webgrpc", webgrpc)
-		a.router.Handler("OPTIONS", "/api/webgrpc", webgrpc)
-		a.router.Handler("TRACE", "/api/webgrpc", webgrpc)
-		a.router.Handler("*", "/api/grpc", a.grpcServer)
+		grpcRoute := a.router.NewRoute()
+		grpcRoute.Path("/api/webgrpc")
+		grpcRoute.Handler(webgrpc)
 		ch <- http.Serve(lis, a.router)
 	}()
 

@@ -3,13 +3,13 @@ package module
 import (
 	"database/sql"
 
-	"github.com/julienschmidt/httprouter"
+	"github.com/gorilla/mux"
 	"google.golang.org/grpc"
 )
 
 type AppInterface interface {
 	GetGrpc() *grpc.Server
-	GetRouter() *httprouter.Router
+	GetRouter() *mux.Router
 	GetDb() *sql.DB
 }
 

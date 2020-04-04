@@ -20,7 +20,7 @@ func (h *helloGrpc) Greet(ctx context.Context, v *hello.Visiter) (*hello.HelloMs
 			Msg: fmt.Sprintf("Hi dear stranger named %s... (no metadata given)", v.GetName()),
 		}, nil
 	}
-	log.Infof("Received metadata %v", md)
+	log.Infof("info about meta: %v", md)
 	md.Set("Last-seen", time.Now().String())
 	if len(md.Get("name")) > 0 {
 		return &hello.HelloMsg{
