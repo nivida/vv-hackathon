@@ -37,7 +37,7 @@ export class LessonRepository {
    * @returns {Promise<Boolean>}
    */
   addAssignment(lessonId, assignmentId) {
-    // TODO: Little bit more logic required to update Array
+    // TODO: Little bit more logic required to update Array (firebase hook or mapping here; mapping here is faster implemented)
     return firebase.firestore
       .collection(this.collectionName)
       .doc(lessonId)
@@ -51,7 +51,7 @@ export class LessonRepository {
    * @returns {Promise<void>}
    */
   deleteAssignment(lessonId, assignmentId) {
-    // TODO: Little bit more logic required to update Array
+    // TODO: Little bit more logic required to update Array (firebase hook or mapping here; mapping here is faster implemented)
     return firebase.firestore
       .collection(this.collectionName)
       .doc(lessonId)
