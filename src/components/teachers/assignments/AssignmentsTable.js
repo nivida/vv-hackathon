@@ -6,8 +6,11 @@ import {datetimeFormat} from "../../../utils/dateFormats";
 import {EditOutlined, PlusOutlined} from "@ant-design/icons";
 import DeleteButton from "../../shared/DeleteButton";
 import {Link} from "react-router-dom";
+import {AssignmentRepo} from "../../../repositories/assignmentRepo";
 
 const AssignmentsTable = (props) => {
+  const repo = new AssignmentRepo();
+  // repo.getAll();
 
   const assignments = [
     {

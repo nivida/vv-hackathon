@@ -8,12 +8,11 @@ export class AuthRepo {
   user = null;
 
   /**
-   * @param email
-   * @param password
+   * @param user
    * @returns {Promise<boolean>}
    */
-  async login(email, password) {
-    await firebase.auth.signInWithEmailAndPassword(email, password);
+  async login(user) {
+    await firebase.auth.signInWithEmailAndPassword(user.email, user.password);
     this.authenticated = true;
 
     return this.authenticated;
@@ -30,15 +29,14 @@ export class AuthRepo {
   }
 
   /**
-   *
-   * @param userId
-   * @returns {unknown}
+   * @param user
+   * @returns {Object}
    */
-  async loadUser(userId) {
+  async loadUser(user) {
     return querySnapToDataArray(
       await firebase.firestore
         .collection(this.collectionName)
-        .where('user', '==', userId)
+        .where('user', '==', user.id)
         .get()
     )[0];
   }

@@ -8,9 +8,11 @@ import {Assignment as AssignmentModel} from "../../../models/assignment";
 import AssignmentResources from "./AssignmentResources";
 import ExerciseSmall from "../exercise/ExerciseSmall";
 import AssignmentComments from "./AssignmentComments";
+import {AssignmentRepo} from "../../../repositories/assignmentRepo";
 
 const Assignment = ({match: {params}}) => {
-  // const assignmentId = params.id;
+  const repo = new AssignmentRepo();
+  // repo.getAll();
 
   const assignment = AssignmentModel.fromPlainObject({id: 1, name: 'Assignment 1'});
 

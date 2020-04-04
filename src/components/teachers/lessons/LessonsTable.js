@@ -6,8 +6,12 @@ import {datetimeFormat} from "../../../utils/dateFormats";
 import {Button, Col, Input, Row, Table} from "antd";
 import {EditOutlined, PlusOutlined} from "@ant-design/icons";
 import DeleteButton from "../../shared/DeleteButton";
+import {LessonRepository} from "../../../repositories/lessonRepository";
 
 const LessonsTable = (props) => {
+  const repo = new LessonRepository();
+  // repo.getLessonsByTeacher();
+
   const lessons = [
     {
       id: '1',
