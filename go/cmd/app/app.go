@@ -7,7 +7,6 @@ import (
 	"log"
 	"net"
 
-	"golang.org/x/xerrors"
 	"google.golang.org/grpc"
 
 	rice "github.com/GeertJohan/go.rice"
@@ -54,18 +53,17 @@ func (a *App) dbSetup(c *Config) error {
 func (a *App) loadAuth() {
 
 }
-func (a *App) GetGrpc() *grpc.Server {
-	return a.grpcServer
-}
 
-func (a *App) LoadModule() error {
-	return xerrors.New("not implemented")
-}
-func (a *App) Run() error {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 3002))
-	if err != nil {
-		return err
-	}
+func (a *App) Run() (err error) {
+	ch := make(chan error)
+	go func() {
+		lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 3002))
+		if err != nil {
+			ch <- err
+			return
+		}
+		ch <- a.grpcServer.Serve(lis)
+	}()
 
-	return a.grpcServer.Serve(lis)
+	return <-ch
 }

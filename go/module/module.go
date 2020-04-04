@@ -8,7 +8,7 @@ import (
 
 type AppInterface interface {
 	GetGrpc() *grpc.Server
-	GetDb() *sql.Conn
+	GetDb() *sql.DB
 }
 
 type Module interface {
