@@ -50,13 +50,13 @@ const Assignment = ({match: {params}}) => {
       </div>
       <div style={{marginTop: 30}}>
         <h3>Exercises</h3>
-        <Card title={false} bordered={false}>
-          {
-            exercises ? exercises.map((exercise) => (
-              <ExerciseSmall exercise={exercise} key={exercise.id}/>
-            )) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'No exercises'}/>
-          }
-        </Card>
+        {
+          exercises ? exercises.map((exercise) => (
+            <Card title={false} bordered={false} style={{marginTop: 20}} key={exercise.id}>
+              <ExerciseSmall exercise={exercise}/>
+            </Card>
+          )) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'No exercises'}/>
+        }
       </div>
       <div style={{marginTop: 30}}>
         <AssignmentComments/>
