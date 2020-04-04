@@ -1,5 +1,5 @@
 import {action, decorate} from "mobx";
-import {firebase} from "../Firebase";
+import {firebase, querySnapToDataArray} from "../Firebase";
 
 export class AssignmentRepo {
   collectionName = 'assignments';
@@ -17,21 +17,27 @@ export class AssignmentRepo {
   }
 
   async getAll() {
-    const snapshot = await firebase.firestore.collection(this.collectionName).get();
-    
-    return snapshot.docs[0].data();
+    return querySnapToDataArray(
+      await firebase.firestore.collection(this.collectionName).get()
+    );
   }
 
-  getByUser(userId) {
-    return firebase.firestore.collection(this.collectionName).where('user', '==', userId).get();
+  async getByUser(userId) {
+    return querySnapToDataArray(
+      await firebase.firestore.collection(this.collectionName).where('user', '==', userId).get()
+    );
   }
 
-  getByAuthor(authorId) {
-    return firebase.firestore.collection(this.collectionName).where('author', '==', authorId).get();
+  async getByAuthor(authorId) {
+    return querySnapToDataArray(
+      await firebase.firestore.collection(this.collectionName).where('author', '==', authorId).get()
+    );
   }
 
-  getByLesson(lessonId) {
-    return firebase.firestore.collection(this.collectionName).where('lesson', '==', lessonId).get();
+  async getByLesson(lessonId) {
+    return querySnapToDataArray(
+      await firebase.firestore.collection(this.collectionName).where('lesson', '==', lessonId).get()
+    );
   }
 }
 

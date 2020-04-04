@@ -1,26 +1,20 @@
 {
-    "config":{
-        "prod": {
-            "firebase": {
-                "apiKey": "AIzaSyAYG0zXmVxqyOUmSvR5u8b_1E-56XNMyQI",
-                "authDomain": "vv-hackathon.firebaseapp.com",
-                "databaseURL": "https://vv-hackathon.firebaseio.com",
-                "projectId": "vv-hackathon",
-                "storageBucket": "vv-hackathon.appspot.com",
-                "messagingSenderId": "615883248409",
-                "appId": "1:615883248409:web:942c0635b0fc6abaa42b88"
-            }
-        },
-        "dev": {
-            "firebase": {
-                "apiKey": "AIzaSyAYG0zXmVxqyOUmSvR5u8b_1E-56XNMyQI",
-                "authDomain": "vv-hackathon.firebaseapp.com",
-                "databaseURL": "https://vv-hackathon.firebaseio.com",
-                "projectId": "vv-hackathon",
-                "storageBucket": "vv-hackathon.appspot.com",
-                "messagingSenderId": "615883248409",
-                "appId": "1:615883248409:web:942c0635b0fc6abaa42b88"
-            }
-        }
+    "production": {
+        "apiKey": "AIzaSyAYG0zXmVxqyOUmSvR5u8b_1E-56XNMyQI",
+        "authDomain": "vv-hackathon.firebaseapp.com",
+        "databaseURL": "https://vv-hackathon.firebaseio.com",
+        "projectId": "vv-hackathon",
+        "storageBucket": "vv-hackathon.appspot.com",
+        "messagingSenderId": "615883248409",
+        "appId": "1:615883248409:web:942c0635b0fc6abaa42b88"
+    },
+    "dev": {
+        "apiKey": "AIzaSyAYG0zXmVxqyOUmSvR5u8b_1E-56XNMyQI",
+        "authDomain": "vv-hackathon.firebaseapp.com",
+        "databaseURL": "https://vv-hackathon.firebaseio.com",
+        "projectId": "vv-hackathon",
+        "storageBucket": "vv-hackathon.appspot.com",
+        "messagingSenderId": "615883248409",
+        "appId": "1:615883248409:web:942c0635b0fc6abaa42b88"
     }
 }

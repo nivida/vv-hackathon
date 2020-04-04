@@ -1,5 +1,6 @@
 import {firebase} from '../Firebase.js';
 import {action, decorate, observable} from "mobx";
+import {querySnapToDataArray} from "../Firebase";
 
 export class AuthRepo {
   collectionName = 'user';
@@ -33,8 +34,10 @@ export class AuthRepo {
    * @param userId
    * @returns {unknown}
    */
-  loadUser(userId) {
-    return firebase.firestore.collection(this.collectionName).where('user', '==', userId).get();
+  async loadUser(userId) {
+    return querySnapToDataArray(
+      await firebase.firestore.collection(this.collectionName).where('user', '==', userId).get()
+    )[0];
   }
 
 }
