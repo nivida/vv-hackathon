@@ -21,7 +21,7 @@ const Add = () => {
   };
 
   return (
-    <LessonForm onSubmit={handleSubmit} assignments={assignments} students={students}/>
+    <LessonForm buttonName="Add" onSubmit={handleSubmit} assignments={assignments} students={students}/>
   )
 };
 

@@ -52,13 +52,14 @@ export default class LessonForm extends React.Component {
             return (
               <div>
                 <Button type="primary" onClick={this.showModal}>
-                  Open Modal with async logic
+                  {this.props.buttonName}
                 </Button>
                 <Modal
                   title={ModalTitle}
                   visible={visible}
                   footer={null}
                   confirmLoading={confirmLoading}
+                  handleCancel={this.handleCancel}
                 >
                   <Form
                     {...this.layout}

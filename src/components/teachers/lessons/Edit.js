@@ -21,7 +21,7 @@ const Edit = (props) => {
   };
 
   return (
-    <LessonForm onSubmit={handleSubmit} assignments={assignments} students={students} lesson={lesson}/>
+    <LessonForm buttonName="Edit" onSubmit={handleSubmit} assignments={assignments} students={students} lesson={lesson}/>
   )
 };
 
