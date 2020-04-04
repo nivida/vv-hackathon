@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from "react";
 import {useContext, useEffect, useState} from "react";
 import {observer} from "mobx-react-lite";
 import Content from "../../shared/Content";
 import {ArrowLeftOutlined} from "@ant-design/icons";
 import ButtonLink from "../../shared/ButtonLink";
-import {Card, Spin} from "antd";
+import {Card, Empty, Spin} from "antd";
 import AssignmentResources from "./AssignmentResources";
 import ExerciseSmall from "../exercise/ExerciseSmall";
 import AssignmentComments from "./AssignmentComments";
@@ -13,12 +14,23 @@ import {StoreContext} from "../../../repositories/rootRepo";
 const Assignment = ({match: {params}}) => {
   const store = useContext(StoreContext);
   const [assignment, setAssignment] = useState(null);
+  const [exercises, setExercises] = useState(null);
 
   useEffect(() => {
     store.assignmentRepo.getById(params.id).then(assignment => {
       setAssignment(assignment);
+      console.log({assignment});
     });
   }, [params.id]);
+
+  useEffect(() => {
+    console.log({assignment});
+    if (assignment) {
+      store.exerciseRepo.getByAssignment(assignment).then(exercises => {
+        setExercises(exercises);
+      });
+    }
+  }, [assignment && assignment.id]);
 
   if (!assignment) {
     return <Spin/>;
@@ -37,9 +49,13 @@ const Assignment = ({match: {params}}) => {
         </Card>
       </div>
       <div style={{marginTop: 30}}>
-        <h3>Exercise</h3>
+        <h3>Exercises</h3>
         <Card title={false} bordered={false}>
-          <ExerciseSmall/>
+          {
+            exercises ? exercises.map((exercise) => (
+              <ExerciseSmall exercise={exercise} key={exercise.id}/>
+            )) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'No exercises'}/>
+          }
         </Card>
       </div>
       <div style={{marginTop: 30}}>
