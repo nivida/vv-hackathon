@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useContext, useEffect, useState} from "react";
 import {observer} from "mobx-react-lite";
 import {Link} from "react-router-dom";
 import moment from "moment";
@@ -7,17 +8,14 @@ import {Col, Input, Row, Table} from "antd";
 import DeleteButton from "../../shared/DeleteButton";
 import Add from "./Add";
 import Edit from "./Edit";
-import {useContext} from "react";
 import {StoreContext} from "../../../repositories/rootRepo";
-import {useState} from "react";
-import {useEffect} from "react";
 
 const LessonsTable = (props) => {
   const store = useContext(StoreContext);
   const [lessons, setLessons] = useState(null);
 
   useEffect(() => {
-      store.lessonRepository.getLessonsByTeacher(store.authRepo.user.uid).then(setLessons);
+    store.lessonRepository.getLessonsByTeacher(store.authRepo.user.uid).then(setLessons);
   }, []);
 
   const onDelete = (lesson) => {
@@ -52,7 +50,7 @@ const LessonsTable = (props) => {
     <div>
       <Row type={'flex'} justify={'space-between'}>
         <Col>
-          <Add />
+          <Add/>
         </Col>
         <Col>
           <Input.Search
