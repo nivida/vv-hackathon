@@ -4,6 +4,7 @@ import MathSolutionForm from "./MathSolutionForm";
 import SelectExercise from "./SelectExercise";
 import AudioRecordForm from "./AudioRecordForm";
 import TextForm from "./TextForm";
+import SortingExercise from "./SortingExercise";
 
 const ExerciseSmall = ({exercise}) => {
 
@@ -25,7 +26,11 @@ const ExerciseSmall = ({exercise}) => {
     return <TextForm exercise={exercise}/>;
   }
 
-  return 'unknown exercise type';
+  if (exercise.type === 'sorting') {
+    return <SortingExercise exercise={exercise}/>;
+  }
+
+  return `unknown exercise type: ${exercise.type}`;
 };
 
 export default observer(ExerciseSmall);
