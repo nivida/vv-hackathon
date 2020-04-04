@@ -80,10 +80,31 @@ func (a *App) Run() (err error) {
 			return
 		}
 		log.Printf("Serving Http on %s \n", addr)
-		a.router.Handler("*", "/api/webgrpc", grpcweb.WrapServer(a.grpcServer))
+		webgrpc := grpcweb.WrapServer(a.grpcServer, grpcweb.WithAllowedRequestHeaders(
+			[]string{"*"}))
+		a.router.Handler("GET", "/api/webgrpc", webgrpc)
+		a.router.Handler("HEAD", "/api/webgrpc", webgrpc)
+		a.router.Handler("POST", "/api/webgrpc", webgrpc)
+		a.router.Handler("PUT", "/api/webgrpc", webgrpc)
+		a.router.Handler("PATCH", "/api/webgrpc", webgrpc)
+		a.router.Handler("DELETE", "/api/webgrpc", webgrpc)
+		a.router.Handler("CONNECT", "/api/webgrpc", webgrpc)
+		a.router.Handler("OPTIONS", "/api/webgrpc", webgrpc)
+		a.router.Handler("TRACE", "/api/webgrpc", webgrpc)
 		a.router.Handler("*", "/api/grpc", a.grpcServer)
 		ch <- http.Serve(lis, a.router)
 	}()
 
 	return <-ch
+}
+
+func withCORS(handler http.Handler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		//Allow CORS here By * or specific origin
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+		handler.ServeHTTP(w, r)
+	}
 }
