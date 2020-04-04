@@ -38,7 +38,7 @@ jsproto:
 
 .PHONY: dockerbuild
 dockerbuild: 
-	docker-compose create --build backend
+	docker-compose create --build backend envoy
 	# TODO: node-js
 
 .PHONY: dockerrun

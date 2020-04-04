@@ -6,7 +6,7 @@ services:
     command: start --insecure
     ports:
         - "26257:26257"
-        - "8080:8080"
+        - "9000:8080"
     networks:
       cockroachdb_net:
   
@@ -15,6 +15,14 @@ services:
     command: start --insecure --join=roach
     depends_on:
     - roach
+    networks:
+      cockroachdb_net:
+
+  envoy:
+    build: docker/proxy/
+    ports:
+    - 8080:8080
+    - 9901:9901
     networks:
       cockroachdb_net:
 
