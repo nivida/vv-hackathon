@@ -3,15 +3,19 @@ import * as React from "react";
 import LessonForm from "./LessonForm";
 import {StoreContext} from "../../../repositories/rootRepo";
 import {useContext, useEffect, useState} from "react";
+import {Button} from "antd";
 
 const Add = () => {
   const store = useContext(StoreContext);
   const [assignments, setAssignments] = useState(null);
   const [students, setStudents] = useState(null);
+  const [isVisible, setIsVisible] = useState(null);
 
   useEffect(() => {
-    store.assignmentRepo.getAll().then(setAssignments);
-    store.userRepo.getUsersByRole('student').then(setStudents);
+    if (isVisible) {
+      store.assignmentRepo.getAll().then(setAssignments);
+      store.userRepo.getUsersByRole('student').then(setStudents);
+    }
   }, []);
 
   const handleSubmit = (values) => {
@@ -21,7 +25,13 @@ const Add = () => {
   };
 
   return (
-    <LessonForm buttonName="Add" onSubmit={handleSubmit} assignments={assignments} students={students}/>
+    <div>
+      <Button type="primary" onClick={() => {setIsVisible(true)}}>
+        Add
+      </Button>
+      {(isVisible) ?
+        <LessonForm buttonName="Edit" onSubmit={handleSubmit} assignments={assignments} students={students}/> : null}
+    </div>
   )
 };
 

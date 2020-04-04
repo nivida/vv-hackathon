@@ -30,33 +30,18 @@ export class LessonRepository {
   }
 
   /**
-   * @method addAssignment
+   * @method update
    *
    * @param lessonId
-   * @param assignmentId
+   * @param data
    *
    * @returns {Promise<Boolean>}
    */
-  addAssignment(lessonId, assignmentId) {
-    // TODO: Little bit more logic required to update Array (firebase hook or mapping here; mapping here is faster implemented)
+  update(lessonId, data) {
     return firebase.firestore
       .collection(this.collectionName)
       .doc(lessonId)
-      .update({assignments: assignmentId})
-  }
-
-  /**
-   *
-   * @param lessonId
-   * @param assignmentId
-   * @returns {Promise<void>}
-   */
-  deleteAssignment(lessonId, assignmentId) {
-    // TODO: Little bit more logic required to update Array (firebase hook or mapping here; mapping here is faster implemented)
-    return firebase.firestore
-      .collection(this.collectionName)
-      .doc(lessonId)
-      .update({assignments: 0})
+      .update(data)
   }
 
   /**
@@ -65,13 +50,12 @@ export class LessonRepository {
    * @returns {any}
    */
   async getLessonById(lessonId) {
-    return querySnapToDataArray(
-      await firebase.firestore
+    const doc = await firebase.firestore
         .collection(this.collectionName)
         .doc(lessonId)
-        .get(),
-      Lesson
-    )[0];
+        .get();
+
+    return doc.data();
   }
 
   /**

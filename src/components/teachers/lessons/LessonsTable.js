@@ -3,38 +3,22 @@ import {observer} from "mobx-react-lite";
 import {Link} from "react-router-dom";
 import moment from "moment";
 import {datetimeFormat} from "../../../utils/dateFormats";
-import {Button, Col, Input, Row, Table} from "antd";
-import {EditOutlined, PlusOutlined} from "@ant-design/icons";
+import {Col, Input, Row, Table} from "antd";
 import DeleteButton from "../../shared/DeleteButton";
-import {LessonRepository} from "../../../repositories/lessonRepository";
-import LessonForm from "./LessonForm";
 import Add from "./Add";
 import Edit from "./Edit";
+import {useContext} from "react";
+import {StoreContext} from "../../../repositories/rootRepo";
+import {useState} from "react";
+import {useEffect} from "react";
 
 const LessonsTable = (props) => {
-  const repo = new LessonRepository();
-  // repo.getLessonsByTeacher();
+  const store = useContext(StoreContext);
+  const [lessons, setLessons] = useState(null);
 
-  const lessons = [
-    {
-      id: '1',
-      name: 'Lesson 1',
-      startsAt: '2020-05-01',
-      endsAt: '2020-05-01',
-    },
-    {
-      id: '2',
-      name: 'Lesson 2',
-      startsAt: '2020-05-01',
-      endsAt: '2020-05-01',
-    },
-    {
-      id: '3',
-      name: 'Lesson 3',
-      startsAt: '2020-05-01',
-      endsAt: '2020-05-01',
-    },
-  ];
+  useEffect(() => {
+      store.lessonRepository.getLessonsByTeacher(store.authRepo.user.uid).then(setLessons);
+  }, []);
 
   const onDelete = (lesson) => {
     // TODO implement
@@ -44,20 +28,20 @@ const LessonsTable = (props) => {
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (text, lesson) => <Link to={`/lessons/${lesson.id}`}>{text}</Link>,
+      render: (text, lesson) => <Link to={`/lessons/${lesson.id}`}>{lesson.title}</Link>,
     },
     {
       title: 'Time',
       dataIndex: 'startsAt',
-      render: (text, lesson) => `${moment(lesson.startsAt).format(datetimeFormat)} - ${moment(lesson.endsAt).format(datetimeFormat)}`,
+      render: (text, lesson) => `${moment(lesson.start).format(datetimeFormat)} - ${moment(lesson.end).format(datetimeFormat)}`,
     },
     {
       title: '',
       align: 'right',
       key: '',
-      render: (text, record) => (
+      render: (text, lesson) => (
         <div>
-          <Edit />
+          <Edit lesson={lesson.id}/>
           <DeleteButton onConfirm={onDelete}/>
         </div>
       ),

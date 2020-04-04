@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Observer} from 'mobx-react-lite';
-import {Modal, Button, Form, Input, TimePicker, DatePicker, Select} from 'antd';
+import {Modal, Button, Form, Input, DatePicker, Select} from 'antd';
 
 export default class LessonForm extends React.Component {
   layout = {
@@ -18,7 +18,6 @@ export default class LessonForm extends React.Component {
 
   state = {
     ModalTitle: this.props.buttonName + ' Lesson',
-    visible: false,
     confirmLoading: false,
   };
 
@@ -43,19 +42,16 @@ export default class LessonForm extends React.Component {
   };
 
   render() {
-    const {visible, confirmLoading, ModalTitle} = this.state;
+    const {confirmLoading, ModalTitle} = this.state;
     return (
       <Observer>
         {
           () => {
             return (
               <div>
-                <Button type="primary" onClick={this.showModal}>
-                  {this.props.buttonName}
-                </Button>
                 <Modal
                   title={ModalTitle}
-                  visible={visible}
+                  visible={true}
                   footer={null}
                   confirmLoading={confirmLoading}
                   handleCancel={this.handleCancel}
@@ -65,6 +61,7 @@ export default class LessonForm extends React.Component {
                     name="lesson"
                     onFinish={this.handleSubmit}
                     onFinishFailed={this.handleCancel}
+                    initialValues={this.props.lesson}
                   >
                     <Form.Item
                       label="Title"
@@ -76,7 +73,7 @@ export default class LessonForm extends React.Component {
                         },
                       ]}
                     >
-                      <Input/>
+                      <Input />
                     </Form.Item>
 
                     <Form.Item
