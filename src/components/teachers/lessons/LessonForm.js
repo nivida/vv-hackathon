@@ -17,7 +17,7 @@ export default class LessonForm extends React.Component {
   };
 
   state = {
-    ModalTitle: 'Add Lesson',
+    ModalTitle: this.props.buttonName + ' Lesson',
     visible: false,
     confirmLoading: false,
   };
@@ -30,7 +30,6 @@ export default class LessonForm extends React.Component {
 
   handleSubmit = (values) => {
     this.setState({
-      ModalText: 'The modal will be closed after two seconds',
       visible: false,
     });
 
