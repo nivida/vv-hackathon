@@ -14,8 +14,10 @@ const LessonsTable = (props) => {
   const store = useContext(StoreContext);
   const [lessons, setLessons] = useState(null);
 
+  const loadData = () => store.lessonRepository.getLessonsByTeacher(store.authRepo.user.uid).then(setLessons);
+
   useEffect(() => {
-    store.lessonRepository.getLessonsByTeacher(store.authRepo.user.uid).then(setLessons);
+    loadData();
   }, []);
 
   const onDelete = (lesson) => {
@@ -39,8 +41,10 @@ const LessonsTable = (props) => {
       key: '',
       render: (text, lesson) => (
         <div>
-          <Edit lesson={lesson.id}/>
-          <DeleteButton onConfirm={() => {store.lessonRepository.delete(lesson.id)}}/>
+          <Edit lesson={lesson.id} onEditSuccess={loadData}/>
+          <DeleteButton onConfirm={() => {
+            store.lessonRepository.delete(lesson.id)
+          }}/>
         </div>
       ),
     },
@@ -50,7 +54,7 @@ const LessonsTable = (props) => {
     <div>
       <Row type={'flex'} justify={'space-between'}>
         <Col>
-          <Add/>
+          <Add onAddSuccess={loadData}/>
         </Col>
         <Col>
           <Input.Search

@@ -6,7 +6,7 @@ import {StoreContext} from "../../../repositories/rootRepo";
 import {Button, message} from "antd";
 import moment from "moment";
 
-const Edit = (props) => {
+const Edit = ({onEditSuccess, ...props}) => {
   const store = useContext(StoreContext);
   const [assignments, setAssignments] = useState(null);
   const [students, setStudents] = useState(null);
@@ -28,6 +28,7 @@ const Edit = (props) => {
       console.log(resp);
       setIsVisible(false);
       message.success('successfully updated lesson!');
+      onEditSuccess && onEditSuccess(resp);
     });
   };
 

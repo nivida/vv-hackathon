@@ -6,7 +6,7 @@ import {StoreContext} from "../../../repositories/rootRepo";
 import {Button, message} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 
-const Add = () => {
+const Add = ({onAddSuccess}) => {
   const store = useContext(StoreContext);
   const [assignments, setAssignments] = useState(null);
   const [students, setStudents] = useState(null);
@@ -27,7 +27,8 @@ const Add = () => {
     store.lessonRepository.create(values).then((res) => {
       console.log(res);
       setIsVisible(false);
-      message.success('successfully added lesson!')
+      message.success('successfully added lesson!');
+      onAddSuccess && onAddSuccess(res);
     });
   };
 
