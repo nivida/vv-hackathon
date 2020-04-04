@@ -8,7 +8,6 @@ import {observer} from "mobx-react-lite";
 import {Layout, Spin} from "antd";
 
 const ProtectedApp = (props) => {
-
   const store = useContext(StoreContext);
 
   const userRole = store.authRepo.user.role;

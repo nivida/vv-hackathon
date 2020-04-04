@@ -4,7 +4,10 @@ import {dev} from './config.json';
 
 export function querySnapToDataArray(snapshot) {
   return snapshot.docs.map((document) => {
-    return document.data();
+    const data = document.data();
+    data.id = document.id;
+
+    return data;
   })
 }
 
