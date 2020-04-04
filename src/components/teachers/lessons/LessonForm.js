@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Observer} from 'mobx-react-lite';
-import {Modal, Button, Form, Input, DatePicker, Select} from 'antd';
+import {Button, DatePicker, Form, Input, Modal, Select} from 'antd';
 
 export default class LessonForm extends React.Component {
   layout = {
@@ -17,32 +17,23 @@ export default class LessonForm extends React.Component {
   };
 
   state = {
-    ModalTitle: this.props.buttonName + ' Lesson',
     confirmLoading: false,
   };
 
-  showModal = async () => {
-    this.setState({
-      visible: true
-    });
-  };
-
   handleSubmit = (values) => {
-    this.setState({
-      visible: false,
+    this.props.onSubmit({
+      ...values,
+      assignments: values.assignments || [],
+      users: values.users || []
     });
-
-    this.props.onSubmit(values);
   };
 
   handleCancel = () => {
-    this.setState({
-      visible: false,
-    });
+    this.props.onCancel && this.props.onCancel();
   };
 
   render() {
-    const {confirmLoading, ModalTitle} = this.state;
+    const {confirmLoading} = this.state;
     return (
       <Observer>
         {
@@ -50,10 +41,11 @@ export default class LessonForm extends React.Component {
             return (
               <div>
                 <Modal
-                  title={ModalTitle}
+                  title={this.props.title || 'Lesson'}
                   visible={true}
                   footer={null}
                   confirmLoading={confirmLoading}
+                  onCancel={this.handleCancel}
                   handleCancel={this.handleCancel}
                 >
                   <Form
@@ -73,7 +65,7 @@ export default class LessonForm extends React.Component {
                         },
                       ]}
                     >
-                      <Input />
+                      <Input/>
                     </Form.Item>
 
                     <Form.Item
@@ -116,10 +108,10 @@ export default class LessonForm extends React.Component {
                       label="Assignments:"
                       name="assignments"
                       rules={[
-                        {
-                          required: true,
-                          message: 'Please select the assignments for this lesson.',
-                        },
+                        // {
+                        //   required: false,
+                        //   message: 'Please select the assignments for this lesson.',
+                        // },
                       ]}
                     >
                       <Select
@@ -136,10 +128,10 @@ export default class LessonForm extends React.Component {
                       label="Students:"
                       name="users"
                       rules={[
-                        {
-                          required: true,
-                          message: 'Please select the students for this lesson.',
-                        },
+                        // {
+                        //   required: true,
+                        //   message: 'Please select the students for this lesson.',
+                        // },
                       ]}
                     >
                       <Select
