@@ -1,19 +1,24 @@
 import * as React from "react";
+import {useContext, useEffect, useState} from "react";
 import Assignments from "./Assignments";
-import {Assignment} from "../../../models/assignment";
 import LessonResources from "./LessonResources";
-import {AssignmentRepo} from "../../../repositories/assignmentRepo";
+import {StoreContext} from "../../../repositories/rootRepo";
+import {Spin} from "antd";
+import {observer} from "mobx-react-lite";
 
 const LessonDetails = ({lesson, style = {}}) => {
-  const repo =  new AssignmentRepo();
-  repo.create({content: 'asdfa'}).then(console.log);
 
-  console.log(repo.getAll().then(console.log).catch(console.log));
+  const store = useContext(StoreContext);
+  const [assignments, setAssignments] = useState(null);
 
-  const assignments = [
-    Assignment.fromPlainObject({id: 1, name: 'Assignment 1'}),
-    Assignment.fromPlainObject({id: 2, name: 'Assignment 2'}),
-  ];
+  useEffect(() => {
+    store.assignmentRepo.getByLesson(lesson).then(ass => {
+      console.log(ass);
+      setAssignments(ass);
+    });
+  }, [lesson && lesson.id]);
+
+  console.log(assignments);
 
   return (
     <div style={style}>
@@ -24,9 +29,9 @@ const LessonDetails = ({lesson, style = {}}) => {
         </div>
       ) : null}
       <LessonResources/>
-      <Assignments assignments={assignments}/>
+      {assignments ? <Assignments assignments={assignments}/> : <Spin/>}
     </div>
   )
 };
 
-export default LessonDetails;
+export default observer(LessonDetails);

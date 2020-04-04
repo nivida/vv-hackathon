@@ -3,6 +3,8 @@ import {useState} from "react";
 import {Button, Card, Col, Row} from "antd";
 import LessonDetails from "./LessonDetails";
 import {DownOutlined, UpOutlined} from "@ant-design/icons";
+import moment from "moment";
+import {timeFormat} from "../../../utils/dateFormats";
 
 const LessonItem = ({lesson, ...props}) => {
 
@@ -12,7 +14,10 @@ const LessonItem = ({lesson, ...props}) => {
     <Card title={false} bordered={false} bodyStyle={{padding: 25, paddingBottom: 5}}>
       <Row justify={'space-between'} type={'flex'}>
         <Col>
-          <p style={{fontWeight: 'bold', margin: 0}}>{'09:00 - 10:00'}</p>
+          <p style={{
+            fontWeight: 'bold',
+            margin: 0
+          }}>{`${moment.unix(lesson.startsAt.seconds).format(timeFormat)} - ${moment.unix(lesson.endsAt.seconds).format(timeFormat)}`}</p>
           <h2 style={{margin: 0}}>{lesson.name}</h2>
         </Col>
         {expanded ? (

@@ -1,5 +1,7 @@
 import {action, decorate} from "mobx";
 import {firebase, querySnapToDataArray} from "../Firebase";
+import {Assignment as AssignmentModel} from "../models/assignment";
+import {firestore} from "firebase";
 
 export class AssignmentRepo {
   collectionName = 'assignments';
@@ -42,6 +44,14 @@ export class AssignmentRepo {
     );
   }
 
+  async getById(id) {
+    const doc = await firebase.firestore
+      .collection(this.collectionName)
+      .doc(id)
+      .get();
+    return AssignmentModel.fromPlainObject(doc.data());
+  }
+
   async getByAuthor(authorId) {
     return querySnapToDataArray(
       await firebase.firestore
@@ -51,11 +61,11 @@ export class AssignmentRepo {
     );
   }
 
-  async getByLesson(lessonId) {
+  async getByLesson(lesson) {
     return querySnapToDataArray(
       await firebase.firestore
         .collection(this.collectionName)
-        .where('lesson', '==', lessonId)
+        .where(firestore.FieldPath.documentId(), 'in', lesson.assignments)
         .get()
     );
   }

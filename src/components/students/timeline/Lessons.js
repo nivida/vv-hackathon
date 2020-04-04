@@ -1,11 +1,8 @@
 import * as React from "react";
 import LessonItem from "./LessonItem";
 import {List} from "antd";
-import {LessonRepository} from "../../../repositories/lessonRepository";
 
 const Lessons = ({lessons = []}) => {
-  const repo = new LessonRepository();
-  // repo.getLessonsByUser()
 
   return (
     <List

@@ -1,5 +1,6 @@
 import {action, decorate} from "mobx";
 import {firebase, querySnapToDataArray} from "../Firebase";
+import {Lesson} from "../models/lesson";
 
 export class LessonRepository {
   collectionName = 'lessons';
@@ -68,7 +69,8 @@ export class LessonRepository {
       await firebase.firestore
         .collection(this.collectionName)
         .doc(lessonId)
-        .get()
+        .get(),
+      Lesson
     )[0];
   }
 
@@ -82,7 +84,8 @@ export class LessonRepository {
       await firebase.firestore
         .collection(this.collectionName)
         .where('users', 'array-contains', userId)
-        .get()
+        .get(),
+      Lesson
     );
   }
 
@@ -96,7 +99,8 @@ export class LessonRepository {
       await firebase.firestore
         .collection(this.collectionName)
         .where('teacher', '==', teacherId)
-        .get()
+        .get(),
+      Lesson
     );
   }
 }
