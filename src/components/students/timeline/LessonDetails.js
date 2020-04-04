@@ -2,8 +2,6 @@ import * as React from "react";
 import Assignments from "./Assignments";
 import {Assignment} from "../../../models/assignment";
 import LessonResources from "./LessonResources";
-import {useDatabase, useFirestoreCollectionData} from "reactfire";
-import {AuthRepo} from "../../../repositories/authRepo";
 import {AssignmentRepo} from "../../../repositories/assignmentRepo";
 
 const LessonDetails = ({lesson, style = {}}) => {
