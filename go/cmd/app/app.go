@@ -26,6 +26,7 @@ func New(c *Config) (app *App, err error) {
 	app = new(App)
 	app.config = c
 	app.grpcServer = grpc.NewServer()
+	app.router = httprouter.New()
 	// setup database
 	err = app.dbSetup(c)
 	return app, err

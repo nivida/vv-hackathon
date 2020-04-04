@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/nivida/vv-hackathon/go/cmd/app"
+	"github.com/nivida/vv-hackathon/go/module/hello"
 	"github.com/nivida/vv-hackathon/go/module/lessons"
 	"gopkg.in/yaml.v2"
 )
@@ -35,7 +36,9 @@ func main() {
 	}
 
 	// Adding Modules
+	vv.LoadModule(new(hello.Module))
 	vv.LoadModule(new(lessons.Module))
+
 	// TODO: run
 	panic(vv.Run())
 }

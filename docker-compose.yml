@@ -13,6 +13,8 @@ services:
   roach_node:
     image: cockroachdb/cockroach:latest
     command: start --insecure --join=roach
+    depends_on:
+    - roach
     networks:
       cockroachdb_net:
 
@@ -21,6 +23,8 @@ services:
       context: ./
       dockerfile: docker/backend/Dockerfile
     command: -config=/app/config.yaml
+    depends_on:
+    - roach
     ports:
       - "4280:3080"
       - "4242:3000"
