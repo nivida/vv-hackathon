@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Observer} from 'mobx-react-lite';
 import {Modal, Button, Form, Input, TimePicker, DatePicker, Select} from 'antd';
-import {AssignmentRepo} from "../../../repositories/assignmentRepo";
 
 export default class LessonForm extends React.Component {
   layout = {
@@ -25,8 +24,7 @@ export default class LessonForm extends React.Component {
 
   showModal = async () => {
     this.setState({
-      visible: true,
-      assignments: await new AssignmentRepo().getAll()
+      visible: true
     });
   };
 
