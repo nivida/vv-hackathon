@@ -20,7 +20,6 @@ const Assignment = ({match: {params}}) => {
   useEffect(() => {
     store.assignmentRepo.getById(params.id).then(assignment => {
       setAssignment(assignment);
-      console.log({assignment});
     });
   }, [params.id]);
 

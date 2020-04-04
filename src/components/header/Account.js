@@ -1,4 +1,4 @@
-import {Avatar, Dropdown, Menu} from "antd";
+import {Avatar, Button, Dropdown, Menu} from "antd";
 import * as React from "react";
 import {useContext} from "react";
 import avatar from "./../../assets/images/avatar.png";
@@ -26,14 +26,12 @@ const Account = (props) => {
   );
 
   return (
-    <Dropdown overlay={menu} trigger={['click']}>
-      <Avatar
-        size={"default"}
-        className={'user-avatar'}
-        alt="avatar"
-        src={avatar}
-      />
-    </Dropdown>
+    <div>
+      <Dropdown overlay={menu} trigger={['click']}>
+        <Button>Profile</Button>
+      </Dropdown>
+    </div>
+
   )
 };
 
