@@ -11,7 +11,7 @@ export class LessonRepository {
    *
    * @param {any} lesson
    *
-   * @returns {Promise<any>}
+   * @returns {Promise<Lesson>}
    */
   create(lesson) {
     return new Promise((resolve, reject) => {
@@ -20,8 +20,8 @@ export class LessonRepository {
         this.authRepository.metadata,
         (err, response) => {
           if (!err) {
-            this.lessons.set(lesson.id, lesson);
             resolve(response);
+            this.lessons.set(response.id, response);
 
             return;
           }
@@ -35,18 +35,18 @@ export class LessonRepository {
   /**
    * @method delete
    *
-   * @param {any} lesson
+   * @param {string} lessonId
    *
-   * @returns {Promise<any>}
+   * @returns {Promise<Boolean>}
    */
-  delete(lesson) {
+  delete(lessonId) {
     return new Promise((resolve, reject) => {
       this.lessonRepoClient.deleteLesson(
         lesson,
         this.authRepository.metadata,
         (err, response) => {
           if (!err) {
-            this.lessons.delete(lesson.id);
+            this.lessons.delete(lessonId);
             resolve(response);
 
             return;
@@ -61,11 +61,11 @@ export class LessonRepository {
    * @method addAssignment
    *
    * @param lessonId
-   * @param assignemnId
+   * @param assignmentId
    *
-   * @returns {Promise<any>}
+   * @returns {Promise<Boolean>}
    */
-  addAssignment(lessonId, assignemnId) {
+  addAssignment(lessonId, assignmentId) {
     return new Promise((resolve, reject) => {
       this.lessonRepoClient.addAssignment(
         {
@@ -75,7 +75,7 @@ export class LessonRepository {
         this.authRepository.metadata,
         (err, response) => {
           if (!err) {
-            this.lessons.set(lesson.id, response);
+            this.lessons.set(lessonId, response);
             resolve(response);
 
             return;
@@ -88,7 +88,7 @@ export class LessonRepository {
 
   /**
    * @param assignmentId
-   * @returns {Promise<any>}
+   * @returns {Promise<Boolean>}
    */
   deleteAssignment(assignmentId) {
     return new Promise((resolve, reject) => {
@@ -113,7 +113,7 @@ export class LessonRepository {
 
   /**
    * @param filter
-   * @returns {Promise<any>}
+   * @returns {Promise<Lesson[]>}
    */
   getLessons(filter) {
     return new Promise((resolve, reject) => {
@@ -124,9 +124,9 @@ export class LessonRepository {
           if (!err) {
             resolve(response);
 
-            response.forEach((lesson => {
+            response.forEach(lesson => {
               this.lessons.set(lesson.id, lesson);
-            }));
+            });
 
             return;
           }
@@ -143,7 +143,7 @@ decorate(LessonRepository, {
   deleteAssignment: action,
   delete: action,
   getAll: action,
-  get: actiom,
+  get: action,
   getLessonsByUser: action,
   lessons: observable
 });

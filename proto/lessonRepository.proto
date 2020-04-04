@@ -30,7 +30,7 @@ service LessonRepository {
     rpc GetLessons(Filter) returns (Lesson);
     rpc CreateLesson(Lesson) returns (Lesson);
     rpc DeleteLesson(Lesson) returns (Bool.Bool);
-    rpc AddAssignment(LessonAssignment) returns (Lesson);
+    rpc AddAssignment(LessonAssignment) returns (Bool.Bool);
     rpc DeleteAssignment(LessonAssignment) returns (Bool.Bool);
     rpc GetAssignments(Filter) returns (AssignmentRepository.Assignment);
 }
