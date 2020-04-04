@@ -1,9 +1,9 @@
+import {firebase} from '../Firebase.js';
 import {action, decorate, observable} from "mobx";
-import {useAuth, useFirestore, useFirestoreDocDataOnce} from "reactfire";
 
 export class AuthRepo {
   collectionName = 'user';
-  authenticated = false;
+  authenticated = true;
   user = null;
 
   /**
@@ -12,7 +12,7 @@ export class AuthRepo {
    * @returns {Promise<boolean>}
    */
   async login(email, password) {
-    await useAuth().signInWithEmailAndPassword(email, password);
+    await firebase.auth.signInWithEmailAndPassword(email, password);
     this.authenticated = true;
 
     return this.authenticated;
@@ -22,7 +22,7 @@ export class AuthRepo {
    * @returns {Promise<boolean>}
    */
   async logout() {
-    await useAuth().signOut();
+    await firebase.auth.signOut();
     this.authenticated = false;
 
     return true;
@@ -34,9 +34,7 @@ export class AuthRepo {
    * @returns {unknown}
    */
   loadUser(userId) {
-    return useFirestoreDocDataOnce(
-      useFirestore().collection(this.collectionName).doc(userId)
-    );
+    return firebase.firestore.collection(this.collectionName).where('user', '==', userId).get();
   }
 
 }

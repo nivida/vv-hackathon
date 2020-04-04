@@ -2,8 +2,13 @@ import * as React from "react";
 import Assignments from "./Assignments";
 import {Assignment} from "../../../models/assignment";
 import LessonResources from "./LessonResources";
+import {useDatabase, useFirestoreCollectionData} from "reactfire";
+import {AuthRepo} from "../../../repositories/authRepo";
+import {AssignmentRepo} from "../../../repositories/assignmentRepo";
 
 const LessonDetails = ({lesson, style = {}}) => {
+  const repo =  new AssignmentRepo();
+  console.log(repo.getAll().then(console.log).catch(console.log));
 
   const assignments = [
     Assignment.fromPlainObject({id: 1, name: 'Assignment 1'}),

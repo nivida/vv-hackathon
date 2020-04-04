@@ -1,5 +1,5 @@
 import {action, decorate} from "mobx";
-import {useFirestore, useFirestoreCollectionData, useFirestoreDocDataOnce} from "reactfire";
+import {firebase} from "../Firebase";
 
 export class LessonRepository {
   collectionName = 'lessons';
@@ -10,7 +10,7 @@ export class LessonRepository {
    * @returns {*}
    */
   create(data) {
-    return useFirestore().collection(this.collectionName).set(data);
+    return firebase.firestore.collection(this.collectionName).set(data);
   }
 
   /**
@@ -19,7 +19,7 @@ export class LessonRepository {
    * @returns {Promise<void>}
    */
   delete(lessonId) {
-    return useFirestore().collection(this.collectionName).doc(lessonId).delete();
+    return firebase.firestore.collection(this.collectionName).doc(lessonId).delete();
   }
 
   /**
@@ -32,7 +32,7 @@ export class LessonRepository {
    */
   addAssignment(lessonId, assignmentId) {
     // TODO: Little bit more logic required to update Array
-    return useFirestore().collection(this.collectionName).doc(lessonId).update({assignments: assignmentId})
+    return firebase.firestore.collection(this.collectionName).doc(lessonId).update({assignments: assignmentId})
   }
 
   /**
@@ -43,7 +43,7 @@ export class LessonRepository {
    */
   deleteAssignment(lessonId, assignmentId) {
     // TODO: Little bit more logic required to update Array
-    return useFirestore().collection(this.collectionName).doc(lessonId).set({assignments: 0})
+    return firebase.firestore.collection(this.collectionName).doc(lessonId).set({assignments: 0})
   }
 
   /**
@@ -52,9 +52,7 @@ export class LessonRepository {
    * @returns {any}
    */
   getLessonById(lessonId) {
-    return useFirestoreDocDataOnce(
-      useFirestore().collection(this.collectionName).doc(lessonId)
-    );
+    return firebase.firestore.collection(this.collectionName).doc(lessonId).get();
   }
 
   /**
@@ -63,24 +61,16 @@ export class LessonRepository {
    * @returns {any | {[p: string]: any}[]}
    */
   getLessonsByUser(userId) {
-    return useFirestoreCollectionData(
-      useFirestore()
-        .collection(this.collectionName)
-        .where('users', 'array-contains', userId)
-    );
+    return firebase.firestore.collection(this.collectionName).where('users', 'array-contains', userId).get();
   }
 
   /**
    *
-   * @param userId
+   * @param teacherId
    * @returns {any | {[p: string]: any}[]}
    */
-  getLessonsByTeacher(userId) {
-    return useFirestoreCollectionData(
-      useFirestore()
-        .collection(this.collectionName)
-        .where('teacher', '==', userId)
-    );
+  getLessonsByTeacher(teacherId) {
+    return firebase.firestore.collection(this.collectionName).where('teacher', '==', teacherId).get();
   }
 }
 

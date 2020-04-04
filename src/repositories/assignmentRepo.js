@@ -1,49 +1,37 @@
 import {action, decorate} from "mobx";
-import {useFirestore, useFirestoreCollectionData} from "reactfire";
+import {firebase} from "../Firebase";
 
 export class AssignmentRepo {
   collectionName = 'assignments';
 
   create(data) {
-    return useFirestore().collection(this.collectionName).set(data);
+    return firebase.firestore.collection(this.collectionName).set(data);
   }
 
   delete(assignmentId) {
-    return useFirestore().collection(this.collectionName).doc(assignmentId).delete();
+    return firebase.firestore.collection(this.collectionName).doc(assignmentId).delete();
   }
 
   update(assignmentId, changes) {
-    return useFirestore().collection(this.collectionName).doc(assignmentId).update(changes);
+    return firebase.firestore.collection(this.collectionName).doc(assignmentId).update(changes);
   }
 
-  getAll() {
-    return useFirestoreCollectionData(
-      useFirestore().collection(this.collectionName)
-    );
+  async getAll() {
+    const snapshot = await firebase.firestore.collection(this.collectionName).get();
+    
+    return snapshot.docs[0].data();
   }
 
   getByUser(userId) {
-    return useFirestoreCollectionData(
-      useFirestore()
-        .collection(this.collectionName)
-        .where('user', '==', userId)
-    );
+    return firebase.firestore.collection(this.collectionName).where('user', '==', userId).get();
   }
 
   getByAuthor(authorId) {
-    return useFirestoreCollectionData(
-      useFirestore()
-        .collection(this.collectionName)
-        .where('author', '==', authorId)
-    );
+    return firebase.firestore.collection(this.collectionName).where('author', '==', authorId).get();
   }
 
-  getByLesson() {
-    return useFirestoreCollectionData(
-      useFirestore()
-        .collection(this.collectionName)
-        .where('lesson', '==', lessId)
-    );
+  getByLesson(lessonId) {
+    return firebase.firestore.collection(this.collectionName).where('lesson', '==', lessonId).get();
   }
 }
 
