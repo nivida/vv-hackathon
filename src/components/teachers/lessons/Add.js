@@ -2,24 +2,25 @@ import {observer} from "mobx-react-lite";
 import * as React from "react";
 import LessonForm from "./LessonForm";
 import {StoreContext} from "../../../repositories/rootRepo";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 
-const Add = async () => {
+const Add = () => {
   const store = useContext(StoreContext);
   const [assignments, setAssignments] = useState(null);
   const [students, setStudents] = useState(null);
 
   useEffect(() => {
     store.assignmentRepo.getAll().then(setAssignments);
-    store.userRepo.getAllStudents().then(setStudents);
+    // store.userRepo.getAllStudents().then(setStudents);
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = (values) => {
+    console.log(values);
     // TODO: Save: store.lessonRepository
   };
 
   return (
-    <LessonForm onSubmit={handleSubmit} assignments={assignments} students={students} />
+    <LessonForm onSubmit={handleSubmit} assignments={assignments} students={students}/>
   )
 };
 

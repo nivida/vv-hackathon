@@ -13,7 +13,7 @@ export default class LessonForm extends React.Component {
   };
 
   tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
+    wrapperCol: {offset: 8, span: 16},
   };
 
   state = {
@@ -34,17 +34,13 @@ export default class LessonForm extends React.Component {
       visible: false,
     });
 
-    this.onSubmit(values);
+    this.props.onSubmit(values);
   };
 
   handleCancel = () => {
     this.setState({
       visible: false,
     });
-  };
-
-  onSubmit = (values) => {
-
   };
 
   render() {
@@ -95,26 +91,21 @@ export default class LessonForm extends React.Component {
                     >
                       <Input.TextArea rows={4}> </Input.TextArea>
                     </Form.Item>
-
                     <Form.Item
                       label="Start"
+                      name="start"
                       rules={[
                         {
                           required: true,
-                          message: 'Please input the starting date and time of your lesson.',
+                          message: 'Please input the start date and time of your lesson.',
                         },
                       ]}
                     >
-                       <Form.Item name="startDate">
-                         <DatePicker/>
-                       </Form.Item>
-                       <Form.Item name="startTime">
-                         <TimePicker/>
-                       </Form.Item>
+                      <DatePicker showTime={true}/>
                     </Form.Item>
-
                     <Form.Item
                       label="End"
+                      name="end"
                       rules={[
                         {
                           required: true,
@@ -122,14 +113,8 @@ export default class LessonForm extends React.Component {
                         },
                       ]}
                     >
-                      <Form.Item name="endDate">
-                        <DatePicker/>
-                      </Form.Item>
-                      <Form.Item name="endTime">
-                        <TimePicker/>
-                      </Form.Item>
+                      <DatePicker showTime={true}/>
                     </Form.Item>
-
                     <Form.Item
                       label="Assignments:"
                       name="assignments"
@@ -145,7 +130,9 @@ export default class LessonForm extends React.Component {
                         style={{width: '100%'}}
                         placeholder="Please select"
                       >
-                        <Select.Option value="Assignment1">Assignment1</Select.Option>
+                        {(this.props.assignments) ? this.props.assignments.map(assignment => (
+                          <Select.Option key={assignment.id}
+                                         value={assignment.id}>{assignment.content}</Select.Option>)) : null}
                       </Select>
                     </Form.Item>
                     <Form.Item
