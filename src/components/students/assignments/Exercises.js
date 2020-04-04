@@ -2,7 +2,7 @@ import * as React from "react";
 import {Card, Empty, List, Steps} from "antd";
 import ExerciseSmall from "../exercise/ExerciseSmall";
 
-const Exercises = ({exercises}) => {
+const Exercises = ({exercises = []}) => {
 
   if (exercises.length === 0) {
     return <Card title={false} bordered={false}>
@@ -13,9 +13,9 @@ const Exercises = ({exercises}) => {
   return (
     <div>
       <Steps size="small" current={0} style={{marginTop: 15}}>
-        <Steps.Step title=""/>
-        <Steps.Step title=""/>
-        <Steps.Step title=""/>
+        {exercises.map((exercise) => (
+          <Steps.Step key={exercise.id} title=""/>
+        ))}
       </Steps>
       <List
         grid={{gutter: 16, xs: 1, sm: 1, md: 1, lg: 1}}
