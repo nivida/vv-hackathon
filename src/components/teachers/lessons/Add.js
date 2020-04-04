@@ -15,8 +15,9 @@ const Add = () => {
   }, []);
 
   const handleSubmit = (values) => {
-    console.log(values);
-    // TODO: Save: store.lessonRepository
+    values.start = values.start.toDate().getTime();
+    values.end = values.end.toDate().getTime();
+    store.lessonRepository.create(values).then(console.log);
   };
 
   return (
