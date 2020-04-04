@@ -3,8 +3,9 @@ import {useContext, useEffect, useState} from "react";
 import Assignments from "./Assignments";
 import LessonResources from "./LessonResources";
 import {StoreContext} from "../../../repositories/rootRepo";
-import {Spin} from "antd";
+import {Button, Spin} from "antd";
 import {observer} from "mobx-react-lite";
+import {PlayCircleOutlined} from "@ant-design/icons";
 
 const LessonDetails = ({lesson, style = {}}) => {
 
@@ -23,9 +24,10 @@ const LessonDetails = ({lesson, style = {}}) => {
   return (
     <div style={style}>
       {lesson.callUrl ? (
-        <div>
-          <h4>Link</h4>
-          <a target={'_blank'} rel="noopener noreferrer" href={lesson.callUrl}>{lesson.callUrl}</a>
+        <div style={{marginBottom: 30}}>
+          <Button icon={<PlayCircleOutlined/>} type={'primary'}>Join Virtual Class</Button>
+          {/*<h4>Link</h4>*/}
+          {/*<a target={'_blank'} rel="noopener noreferrer" href={lesson.callUrl}>{lesson.callUrl}</a>*/}
         </div>
       ) : null}
       <LessonResources/>

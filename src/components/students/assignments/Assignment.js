@@ -15,6 +15,7 @@ const Assignment = ({match: {params}}) => {
   const store = useContext(StoreContext);
   const [assignment, setAssignment] = useState(null);
   const [exercises, setExercises] = useState(null);
+  const [materials, setMaterials] = useState(null);
 
   useEffect(() => {
     store.assignmentRepo.getById(params.id).then(assignment => {
@@ -23,10 +24,13 @@ const Assignment = ({match: {params}}) => {
   }, [params.id]);
 
   useEffect(() => {
-    console.log({assignment});
     if (assignment) {
       store.exerciseRepo.getByAssignment(assignment).then(exercises => {
         setExercises(exercises);
+      });
+      store.materialRepo.getByAssignment(assignment).then(materials => {
+        console.log({materials});
+        setMaterials(materials);
       });
     }
   }, [assignment && assignment.id]);
@@ -43,9 +47,7 @@ const Assignment = ({match: {params}}) => {
       </h1>
       <div style={{marginTop: 30}}>
         <h3>Learning Material</h3>
-        <Card title={false} bordered={false}>
-          <AssignmentResources/>
-        </Card>
+        {materials ? <AssignmentResources materials={materials}/> : <Spin/>}
       </div>
       <div style={{marginTop: 30}}>
         <h3>Exercises</h3>
