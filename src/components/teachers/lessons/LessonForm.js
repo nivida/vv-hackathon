@@ -148,6 +148,24 @@ export default class LessonForm extends React.Component {
                         <Select.Option value="Assignment1">Assignment1</Select.Option>
                       </Select>
                     </Form.Item>
+                    <Form.Item
+                      label="Students:"
+                      name="users"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please select the students for this lesson.',
+                        },
+                      ]}
+                    >
+                      <Select
+                        mode="multiple"
+                        style={{width: '100%'}}
+                        placeholder="Please select"
+                      >
+                        <Select.Option value="Student1">Student1</Select.Option>
+                      </Select>
+                    </Form.Item>
                     <Form.Item {...this.tailLayout}>
                       <Button type="primary" htmlType="submit">
                         Submit
