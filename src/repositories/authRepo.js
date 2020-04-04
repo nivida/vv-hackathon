@@ -42,7 +42,6 @@ export class AuthRepo {
         .get()
     )[0];
   }
-
 }
 
 decorate(AuthRepo, {
