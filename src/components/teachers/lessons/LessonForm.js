@@ -18,7 +18,6 @@ export default class LessonForm extends React.Component {
   };
 
   state = {
-    ModalText: 'Content of the modal',
     ModalTitle: 'Add Lesson',
     visible: false,
     confirmLoading: false,
