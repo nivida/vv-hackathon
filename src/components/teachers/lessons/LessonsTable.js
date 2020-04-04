@@ -20,10 +20,6 @@ const LessonsTable = (props) => {
     loadData();
   }, []);
 
-  const onDelete = (lesson) => {
-    // TODO implement
-  };
-
   const columns = [
     {
       title: 'Name',
