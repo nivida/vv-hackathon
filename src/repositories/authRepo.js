@@ -12,16 +12,18 @@ export class AuthRepo {
    * @returns {Promise<boolean>}
    */
   async login(email, password) {
-    this.authenticated = await useAuth().signInWithEmailAndPassword(email, password);
+    await useAuth().signInWithEmailAndPassword(email, password);
+    this.authenticated = true;
 
-    return true;
+    return this.authenticated;
   }
 
   /**
    * @returns {Promise<boolean>}
    */
   async logout() {
-    this.authenticated = await useAuth().signOut();
+    await useAuth().signOut();
+    this.authenticated = false;
 
     return true;
   }
