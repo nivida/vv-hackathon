@@ -10,7 +10,9 @@ export class LessonRepository {
    * @returns {*}
    */
   create(data) {
-    return firebase.firestore.collection(this.collectionName).set(data);
+    return firebase.firestore
+      .collection(this.collectionName)
+      .set(data);
   }
 
   /**
@@ -19,7 +21,10 @@ export class LessonRepository {
    * @returns {Promise<void>}
    */
   delete(lessonId) {
-    return firebase.firestore.collection(this.collectionName).doc(lessonId).delete();
+    return firebase.firestore
+      .collection(this.collectionName)
+      .doc(lessonId)
+      .delete();
   }
 
   /**
@@ -32,7 +37,10 @@ export class LessonRepository {
    */
   addAssignment(lessonId, assignmentId) {
     // TODO: Little bit more logic required to update Array
-    return firebase.firestore.collection(this.collectionName).doc(lessonId).update({assignments: assignmentId})
+    return firebase.firestore
+      .collection(this.collectionName)
+      .doc(lessonId)
+      .update({assignments: assignmentId})
   }
 
   /**
@@ -43,7 +51,10 @@ export class LessonRepository {
    */
   deleteAssignment(lessonId, assignmentId) {
     // TODO: Little bit more logic required to update Array
-    return firebase.firestore.collection(this.collectionName).doc(lessonId).set({assignments: 0})
+    return firebase.firestore
+      .collection(this.collectionName)
+      .doc(lessonId)
+      .set({assignments: 0})
   }
 
   /**
@@ -52,7 +63,12 @@ export class LessonRepository {
    * @returns {any}
    */
   async getLessonById(lessonId) {
-    return querySnapToDataArray(await firebase.firestore.collection(this.collectionName).doc(lessonId).get())[0];
+    return querySnapToDataArray(
+      await firebase.firestore
+        .collection(this.collectionName)
+        .doc(lessonId)
+        .get()
+    )[0];
   }
 
   /**
@@ -62,7 +78,10 @@ export class LessonRepository {
    */
   async getLessonsByUser(userId) {
     return querySnapToDataArray(
-      await firebase.firestore.collection(this.collectionName).where('users', 'array-contains', userId).get()
+      await firebase.firestore
+        .collection(this.collectionName)
+        .where('users', 'array-contains', userId)
+        .get()
     );
   }
 
@@ -73,7 +92,10 @@ export class LessonRepository {
    */
   async getLessonsByTeacher(teacherId) {
     return querySnapToDataArray(
-      await firebase.firestore.collection(this.collectionName).where('teacher', '==', teacherId).get()
+      await firebase.firestore
+        .collection(this.collectionName)
+        .where('teacher', '==', teacherId)
+        .get()
     );
   }
 }

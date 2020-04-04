@@ -36,7 +36,10 @@ export class AuthRepo {
    */
   async loadUser(userId) {
     return querySnapToDataArray(
-      await firebase.firestore.collection(this.collectionName).where('user', '==', userId).get()
+      await firebase.firestore
+        .collection(this.collectionName)
+        .where('user', '==', userId)
+        .get()
     )[0];
   }
 
