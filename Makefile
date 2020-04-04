@@ -13,6 +13,14 @@ goproto:
 	mv go/proto/github.com/nivida/vv-hackathon/go/proto/* go/proto
 	rm -rf go/proto/github.com
 
+.PHONY: goinit
+goinit: goproto
+	go mod download
+
+.PHONY: godev
+godev:
+	cd go; go run cmd/main.go
+
 .PHONY: jsproto
 jsproto:
 	# generate protobufs
@@ -27,3 +35,16 @@ jsproto:
 			--grpc-web_out=import_style=commonjs,mode=grpcweb:./client/proto-clients \
 		{} ';'   \
     ;
+
+.PHONY: dockerbuild
+dockerbuild: 
+	docker-compose create --build backend
+	# TODO: node-js
+
+.PHONY: dockerrun
+dockerrun: 
+	# should we send to background? add "-d"
+	docker-compose up 
+
+.PHONY: docker
+docker: dockerbuild dockerrun

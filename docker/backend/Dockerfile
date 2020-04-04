@@ -31,5 +31,5 @@ RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o /data/hackathon -ldflags '
 
 FROM scratch as backend
 COPY --from=builder /data/hackathon /app/backend
-COPY go/config.yaml /app/config.yaml
+COPY go/config.docker.yaml /app/config.yaml
 ENTRYPOINT [ "/app/backend" ]
