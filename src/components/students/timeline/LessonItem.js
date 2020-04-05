@@ -18,7 +18,7 @@ const LessonItem = ({lesson, ...props}) => {
           fontWeight: 'bold',
           margin: 0,
           fontSize: 14
-        }}>{`${moment.unix(lesson.start).format(timeFormat)} - ${moment.unix(lesson.end).format(timeFormat)}`}</p>
+        }}>{`${moment.unix(lesson.start / 1000).format(timeFormat)} - ${moment.unix(lesson.end / 1000).format(timeFormat)}`}</p>
         <h2 style={{margin: 0}}>{lesson.title}</h2>
       </Col>
       <Col>

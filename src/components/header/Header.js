@@ -1,4 +1,4 @@
-import {Avatar, Layout} from "antd";
+import {Layout} from "antd";
 import React from "react";
 import Account from "./Account";
 import "./header.scss"

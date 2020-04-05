@@ -16,7 +16,7 @@ const Lessons = ({lessons = []}) => {
 
   return (
     <VerticalTimeline layout={'1-column'}>
-      {lessons.map(lesson => (
+      {lessons.sort((a, b) => a.start - b.start).map(lesson => (
         <VerticalTimelineElement
           key={lesson.id}
           // date={`${moment.unix(lesson.start).format(timeFormat)} - ${moment.unix(lesson.end).format(timeFormat)}`}

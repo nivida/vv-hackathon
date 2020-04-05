@@ -62,6 +62,8 @@ export class AssignmentRepo {
   }
 
   async getByLesson(lesson) {
+    if ((lesson.assignments || []).length === 0) return Promise.resolve([]);
+
     return querySnapToDataArray(
       await firebase.firestore
         .collection(this.collectionName)

@@ -121,7 +121,7 @@ export default class LessonForm extends React.Component {
                       >
                         {(this.props.assignments) ? this.props.assignments.map(assignment => (
                           <Select.Option key={assignment.id}
-                                         value={assignment.id}>{assignment.content}</Select.Option>)) : null}
+                                         value={assignment.id}>{assignment.name}</Select.Option>)) : null}
                       </Select>
                     </Form.Item>
                     <Form.Item
@@ -141,7 +141,7 @@ export default class LessonForm extends React.Component {
                       >
                         {(this.props.students) ? this.props.students.map(student => (
                           <Select.Option key={student.id}
-                                         value={student.id}>{student.id}</Select.Option>)) : null}
+                                         value={student.id}>{student.name}</Select.Option>)) : null}
                       </Select>
                     </Form.Item>
                     <Form.Item {...this.tailLayout}>
