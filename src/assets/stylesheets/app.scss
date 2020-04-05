@@ -75,3 +75,19 @@
     line-height: 28px;
   }
 }
+
+.vertical-timeline-element-icon svg {
+  position: absolute;
+}
+
+.vertical-timeline-element-icon {
+  box-shadow: 0 0 0 2px #ffffff, inset 0 0 0 rgba(0, 0, 0, 0), 0 3px 0 2px rgba(0, 0, 0, 0);
+}
+
+.vertical-timeline-element-content {
+  box-shadow: none;
+}
+
+.vertical-timeline-element-date {
+  display: none !important;
+}
