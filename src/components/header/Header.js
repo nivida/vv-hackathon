@@ -37,10 +37,10 @@ const Header = (props) => {
         <span style={{paddingLeft: '10px'}}>
           {name}
         </span>
+        <div style={{height: '20px', marginTop: '-49px', marginLeft: '50px'}}>
+          <Progress strokeLinecap="square" percent={75} status="active" showInfo={true}/>
+        </div>
       </Tooltip>
-      <div style={{height: '20px', marginTop: '-49px', marginLeft: '50px'}}>
-        <Progress strokeLinecap="square" percent={75} status="active" showInfo={true}/>
-      </div>
     </div>
     <div className={'right-content'} style={{float: 'right'}}>
       <Account/>
