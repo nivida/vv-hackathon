@@ -1,4 +1,4 @@
-import {Avatar, Layout, Tooltip} from "antd";
+import {Avatar, Layout, Progress, Tooltip} from "antd";
 import React, {useContext, useEffect, useState} from "react";
 import Account from "./Account";
 import avatar from "../../assets/images/avatar.png";
@@ -26,7 +26,7 @@ const Header = (props) => {
     {/*  <Brand collapsed={isMobile}/>*/}
     {/*</div>*/}
     {children}
-    <div className={'left-content'} style={{float: 'left'}}>
+    <div className={'left-content'} style={{float: 'left', width: '175px'}}>
       <Avatar
         size={"large"}
         className={'user-avatar'}
@@ -38,6 +38,9 @@ const Header = (props) => {
           {name}
         </span>
       </Tooltip>
+      <div style={{height: '20px', marginTop: '-49px', marginLeft: '50px'}}>
+        <Progress strokeLinecap="square" percent={75} status="active" showInfo={true}/>
+      </div>
     </div>
     <div className={'right-content'} style={{float: 'right'}}>
       <Account/>
