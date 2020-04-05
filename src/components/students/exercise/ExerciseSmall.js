@@ -5,6 +5,7 @@ import SelectExercise from "./SelectExercise";
 import AudioRecordForm from "./AudioRecordForm";
 import TextForm from "./TextForm";
 import SortingExercise from "./SortingExercise";
+import VideoRecordForm from "./VideoRecordForm";
 
 const ExerciseSmall = ({exercise}) => {
 
@@ -18,7 +19,7 @@ const ExerciseSmall = ({exercise}) => {
     return <MathSolutionForm exercise={exercise}/>;
   }
 
-  if (exercise.type === 'audio-record') {
+  if (exercise.type === 'audio-recording') {
     return <AudioRecordForm exercise={exercise}/>;
   }
 
@@ -28,6 +29,10 @@ const ExerciseSmall = ({exercise}) => {
 
   if (exercise.type === 'sorting') {
     return <SortingExercise exercise={exercise}/>;
+  }
+
+  if (exercise.type === 'video-recording') {
+    return <VideoRecordForm exercise={exercise}/>;
   }
 
   return `unknown exercise type: ${exercise.type}`;

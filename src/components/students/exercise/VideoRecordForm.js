@@ -1,13 +1,14 @@
 import * as React from "react";
+import {useEffect, useRef} from "react";
 import "./AudioRecordForm.scss";
-import {Button, Card, Form} from "antd";
+import {Button, Form} from "antd";
 import "./VideoRecordForm.scss";
 import {ReactMediaRecorder} from "react-media-recorder";
 import PlayCircleOutlined from "@ant-design/icons/es/icons/PlayCircleOutlined";
 import PauseCircleOutlined from "@ant-design/icons/es/icons/PauseCircleOutlined";
-import {useRef, useEffect} from "react";
+import SubmittableExercise from "./shared/SubmittableExercise";
 
-const VideoPreview = ({stream}) => {
+const VideoPreview = ({stream, controls = true}) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const VideoPreview = ({stream}) => {
     return null;
   }
 
-  return <video ref={videoRef} controls autoPlay muted className="video-container" />;
+  return <video ref={videoRef} controls={controls} autoPlay muted className="video-container"/>;
 };
 
 export default class VideoRecordForm extends React.Component {
@@ -42,7 +43,8 @@ export default class VideoRecordForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      record: false
+      record: false,
+      canSubmit: false
     }
   }
 
@@ -54,7 +56,8 @@ export default class VideoRecordForm extends React.Component {
 
   stop() {
     this.setState({
-      record: false
+      record: false,
+      canSubmit: true
     });
   }
 
@@ -64,35 +67,40 @@ export default class VideoRecordForm extends React.Component {
 
   render() {
     return (
-      <div className="site-card-border-less-wrapper">
-        <Card title="Video Recording" bordered={false}>
-          <Form
-            {...this.layout}
-            name="video-recording"
-            onFinish={this.handleSubmit.bind(this)}
-          >
-              <ReactMediaRecorder
-                video
-                render={({startRecording, stopRecording, mediaBlobUrl, previewStream, status}) => (
-                  <div className="video-wrapper">
-                    {(status === 'stopped') ? <video src={mediaBlobUrl} controls autoPlay className="video-container"/> : <VideoPreview stream={previewStream} />}
-                    <Button type="primary" shape="circle" onClick={() => {startRecording(); this.start()}} style={{margin: '10px 8px 0 0', height: '36px', width: '36px'}} >
-                      <PlayCircleOutlined className="play-button" />
-                    </Button>
-                    <Button type="primary" shape="circle" onClick={() => {stopRecording(); this.stop()}} htmlType="submit" style={{margin: '10px 8px 0 0', height: '36px', width: '36px'}} >
-                      <PauseCircleOutlined className="stop-button" />
-                    </Button>
-                  </div>
-                )}
-              />
-            <Form.Item {...this.tailLayout}>
-              <Button type="primary" htmlType="submit" style={{ margin: '10px 0 0 0' }}>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </Card>
-      </div>
+      <SubmittableExercise exercise={this.props.exercise} button={this.state.canSubmit && !this.state.record}>
+        <Form
+          {...this.layout}
+          name="video-recording"
+          onFinish={this.handleSubmit.bind(this)}
+        >
+          <ReactMediaRecorder
+            video
+            render={({startRecording, stopRecording, mediaBlobUrl, previewStream, status}) => (
+              <div className="video-wrapper">
+                {(status === 'stopped') ? <video src={mediaBlobUrl} controls autoPlay className="video-container"/> :
+                  <VideoPreview stream={previewStream} controls={false}/>}
+                <Button type="primary" shape="circle" disabled={this.state.record} onClick={() => {
+                  startRecording();
+                  this.start()
+                }} style={{margin: '10px 8px 0 0', height: '36px', width: '36px'}}>
+                  <PlayCircleOutlined className="play-button"/>
+                </Button>
+                <Button type="primary" shape="circle" disabled={!this.state.record} onClick={() => {
+                  stopRecording();
+                  this.stop()
+                }} htmlType="submit" style={{margin: '10px 8px 0 0', height: '36px', width: '36px'}}>
+                  <PauseCircleOutlined className="stop-button"/>
+                </Button>
+              </div>
+            )}
+          />
+          {/*<Form.Item {...this.tailLayout}>*/}
+          {/*  <Button type="primary" htmlType="submit" style={{margin: '10px 0 0 0'}}>*/}
+          {/*    Submit*/}
+          {/*  </Button>*/}
+          {/*</Form.Item>*/}
+        </Form>
+      </SubmittableExercise>
     );
   }
 }

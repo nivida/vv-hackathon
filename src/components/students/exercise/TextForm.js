@@ -1,15 +1,12 @@
 import * as React from "react";
-import {Button, Input} from "antd";
+import {Input} from "antd";
+import SubmittableExercise from "./shared/SubmittableExercise";
 
 const TextForm = ({exercise}) => {
   return (
-    <div>
-      <h4>{exercise.question}</h4>
+    <SubmittableExercise exercise={exercise} title={exercise.question}>
       <Input.TextArea rows={6}/>
-      <div style={{marginTop: 30}}>
-        <Button type={'primary'}>Submit</Button>
-      </div>
-    </div>
+    </SubmittableExercise>
   )
 };
 
