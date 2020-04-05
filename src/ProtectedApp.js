@@ -6,6 +6,7 @@ import TeacherApp from "./TeacherApp";
 import {StoreContext} from "./repositories/rootRepo";
 import {observer} from "mobx-react-lite";
 import {Layout, Spin} from "antd";
+import ParentApp from "./ParentApp";
 
 const ProtectedApp = (props) => {
   const store = useContext(StoreContext);
@@ -26,6 +27,10 @@ const ProtectedApp = (props) => {
 
   if (userRole === UserTypes.teacher) {
     return <TeacherApp/>
+  }
+
+  if (userRole === UserTypes.parent) {
+    return <ParentApp/>
   }
 
   return <p>unknown user role</p>;

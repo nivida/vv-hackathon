@@ -14,10 +14,12 @@ const Account = (props) => {
   const store = useContext(StoreContext);
   const [name, setName] = useState(null);
   const [credits, setCredits] = useState(null);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
     setName(store.authRepo.user.name);
     setCredits(store.authRepo.user.credits);
+    setRole(store.authRepo.user.role);
   }, []);
 
 
@@ -53,7 +55,7 @@ const Account = (props) => {
           {name}
         </span>
         <div style={{height: '20px', marginTop: '-49px', marginLeft: '50px'}}>
-          <Progress strokeLinecap="square" percent={75} status="active" showInfo={true}/>
+          {(role !== 'parent') ? <Progress strokeLinecap="square" percent={75} status="active" showInfo={true}/> : null}
         </div>
       </Tooltip>
     </div>
