@@ -8,14 +8,12 @@ import AssignmentForm from "./AssignmentForm";
 
 const Add = ({onAddSuccess}) => {
   const store = useContext(StoreContext);
-  const [students, setStudents] = useState(null);
   const [materials, setMaterials] = useState(null);
   const [exercises, setExercises] = useState(null);
   const [isVisible, setIsVisible] = useState(null);
 
   useEffect(() => {
     if (isVisible) {
-      store.userRepo.getUsersByRole('student').then(setStudents);
       store.materialRepo.getAll().then(setMaterials);
       store.exerciseRepo.getAll().then(setExercises)
     }
@@ -41,8 +39,7 @@ console.log(values);
                              onCancel={() => setIsVisible(false)}
                              onSubmit={handleSubmit}
                              materials={materials}
-                             exercises={exercises}
-                             students={students}/> : null}
+                             exercises={exercises}/> : null}
   </div>
 };
 

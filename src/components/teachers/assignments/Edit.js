@@ -9,7 +9,6 @@ import moment from "moment";
 const Edit = ({onEditSuccess, ...props}) => {
   const store = useContext(StoreContext);
   const [assignment, setAssignment] = useState(null);
-  const [students, setStudents] = useState(null);
   const [materials, setMaterials] = useState(null);
   const [exercises, setExercises] = useState(null);
   const [isVisible, setIsVisible] = useState(null);
@@ -20,7 +19,6 @@ const Edit = ({onEditSuccess, ...props}) => {
 
 
       store.assignmentRepo.getById(props.assignment).then(setAssignment);
-      store.userRepo.getUsersByRole('student').then(setStudents);
       store.materialRepo.getAll().then(setMaterials);
       store.exerciseRepo.getAll().then(setExercises)
     }
@@ -47,12 +45,11 @@ const Edit = ({onEditSuccess, ...props}) => {
       }}>
         Edit
       </Button>
-      {(isVisible && assignment && students && materials && exercises) ?
+      {(isVisible && assignment && materials && exercises) ?
         <AssignmentForm title={'Edit Assignment'} submitTitle={'Edit'}
                     onCancel={() => setIsVisible(false)}
                     onSubmit={handleSubmit}
                     assignment={initialValues}
-                    students={students}
                     materials={materials}
                     exercises={exercises}/> : null}
     </div>

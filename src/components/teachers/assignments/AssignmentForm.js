@@ -164,25 +164,6 @@ export default class AssignmentForm extends React.Component {
                                          value={exercise.id}>{exercise.name}</Select.Option>)) : null}
                       </Select>
                     </Form.Item>
-                    <Form.Item
-                      label="Students:"
-                      name="students"
-                      rules={[
-                        {
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <Select
-                        mode="multiple"
-                        style={{width: '100%'}}
-                        placeholder="Please select"
-                      >
-                        {(this.props.students) ? this.props.students.map(student => (
-                          <Select.Option key={student.id}
-                                         value={student.id}>{student.name}</Select.Option>)) : null}
-                      </Select>
-                    </Form.Item>
                     <Form.Item {...this.tailLayout}>
                       <Button type="primary" htmlType="submit">
                         {this.props.submitTitle}

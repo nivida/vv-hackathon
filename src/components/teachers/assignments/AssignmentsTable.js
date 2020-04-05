@@ -22,10 +22,6 @@ const AssignmentsTable = (props) => {
     loadData();
   }, []);
 
-  const onDelete = (assignment) => {
-    // TODO implement
-  };
-
   const columns = [
     {
       title: 'Name',
