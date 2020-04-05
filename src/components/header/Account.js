@@ -55,7 +55,7 @@ const Account = (props) => {
           {name}
         </span>
         <div style={{height: '20px', marginTop: '-49px', marginLeft: '50px'}}>
-          {(role !== 'parent') ? <Progress strokeLinecap="square" percent={75} status="active" showInfo={true}/> : null}
+          {(role === 'student') ? <Progress strokeLinecap="square" percent={75} status="active" showInfo={true}/> : null}
         </div>
       </Tooltip>
     </div>
