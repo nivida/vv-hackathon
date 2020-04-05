@@ -7,6 +7,7 @@ import BlankLayout from "../shared/BlankLayout";
 import {observer} from "mobx-react-lite";
 import {StoreContext} from "../../repositories/rootRepo";
 import {message} from "antd";
+import logo from "../../assets/images/logo-schule-aarau.png";
 
 const Login = (props) => {
 
@@ -31,7 +32,8 @@ const Login = (props) => {
 
   return <BlankLayout>
     <div className={'container'}>
-      <div className={'content'}>
+      <div className={'content'} style={{textAlign: 'center'}}>
+        <img src={logo} style={{width: '250px', marginBottom: '20px'}}/>
         <LoginForm onSubmit={onSubmit} login={login}/>
       </div>
     </div>
