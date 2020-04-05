@@ -52,6 +52,17 @@ export class MaterialRepo {
         .get(),
     );
   }
+
+  async getByLesson(lesson) {
+    if ((lesson.materials || []).length === 0) return Promise.resolve([]);
+
+    return querySnapToDataArray(
+      await firebase.firestore
+        .collection(this.collectionName)
+        .where(firestore.FieldPath.documentId(), 'in', lesson.materials || [])
+        .get(),
+    );
+  }
 }
 
 decorate(MaterialRepo, {
