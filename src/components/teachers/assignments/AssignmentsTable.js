@@ -6,32 +6,19 @@ import {datetimeFormat} from "../../../utils/dateFormats";
 import {EditOutlined, PlusOutlined} from "@ant-design/icons";
 import DeleteButton from "../../shared/DeleteButton";
 import {Link} from "react-router-dom";
-import {AssignmentRepo} from "../../../repositories/assignmentRepo";
+import {useContext} from "react";
+import {StoreContext} from "../../../repositories/rootRepo";
+import {useState} from "react";
+import {useEffect} from "react";
+import AssignmentForm from "./AssignmentForm.js";
 
 const AssignmentsTable = (props) => {
-  const repo = new AssignmentRepo();
-  // repo.getAll();
+  const store = useContext(StoreContext);
+  const [assignments, setAssignments] = useState(null);
 
-  const assignments = [
-    {
-      id: '1',
-      name: 'Ass 1',
-      deadline: '2020-05-01',
-      tags: ['math', 'math-100'],
-    },
-    {
-      id: '2',
-      name: 'Ass 2',
-      deadline: '2020-05-01',
-      tags: ['history'],
-    },
-    {
-      id: '3',
-      name: 'Ass 3',
-      deadline: '2020-05-01',
-      tags: ['arts'],
-    },
-  ];
+  useEffect(() => {
+    store.assignmentRepo.getByAuthor(store.authRepo.user.uid).then(setAssignments);
+  }, []);
 
   const onDelete = (assignment) => {
     // TODO implement
@@ -49,20 +36,25 @@ const AssignmentsTable = (props) => {
       render: text => moment(text).format(datetimeFormat),
     },
     {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
+      title: 'Topic',
+      key: 'topic',
+      dataIndex: 'topic',
+      render: topic => (
         <span>
-        {tags.map(tag => {
-          const color = tag.length > 5 ? 'geekblue' : 'green';
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
+            <Tag color="geekblue" key={topic}>
+              {topic.toUpperCase()}
             </Tag>
-          );
-        })}
-      </span>
+        </span>
+      ),
+    },
+    {
+      title: 'State',
+      key: 'state',
+      dataIndex: 'state',
+      render: state => (
+        <span>
+          {state}
+        </span>
       ),
     },
     {
@@ -92,6 +84,7 @@ const AssignmentsTable = (props) => {
           />
         </Col>
       </Row>
+      <AssignmentForm title="Add" />
       <Table style={{marginTop: 10}} columns={columns} rowKey={'id'} dataSource={assignments} bordered={false}/>
     </div>
   );

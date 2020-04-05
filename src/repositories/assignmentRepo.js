@@ -39,7 +39,7 @@ export class AssignmentRepo {
     return querySnapToDataArray(
       await firebase.firestore
         .collection(this.collectionName)
-        .where('user', '==', userId)
+        .where('users', '==', userId)
         .get()
     );
   }
