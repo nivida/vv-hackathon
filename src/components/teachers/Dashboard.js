@@ -3,6 +3,7 @@ import {Tabs} from "antd";
 import AssignmentsTable from "./assignments/AssignmentsTable";
 import LessonsTable from "./lessons/LessonsTable";
 import Content from "../shared/Content";
+import MaterialsTable from "./materials/MaterialsTable";
 
 const Dashboard = (props) => {
   return (
@@ -13,6 +14,9 @@ const Dashboard = (props) => {
         </Tabs.TabPane>
         <Tabs.TabPane tab="Assignments" key="2">
           <AssignmentsTable/>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Materials" key="3">
+          <MaterialsTable/>
         </Tabs.TabPane>
       </Tabs>
     </Content>
