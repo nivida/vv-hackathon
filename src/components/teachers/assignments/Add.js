@@ -24,7 +24,7 @@ const Add = ({onAddSuccess}) => {
   const handleSubmit = (values) => {
     values.deadline = values.deadline.toDate().getTime();
     values.author = store.authRepo.user.uid;
-
+console.log(values);
     store.assignmentRepo.create(values).then((res) => {
       setIsVisible(false);
       message.success('successfully added assignment!');
@@ -37,6 +37,7 @@ const Add = ({onAddSuccess}) => {
       Add
     </Button>
     {isVisible ? <AssignmentForm title={'Add Assignment'}
+                             submitTitle={'Add'}
                              onCancel={() => setIsVisible(false)}
                              onSubmit={handleSubmit}
                              materials={materials}

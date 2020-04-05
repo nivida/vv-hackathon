@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Observer} from 'mobx-react-lite';
-import {Button, DatePicker, Form, Input, Modal, Select} from 'antd';
+import {Button, DatePicker, Form, Input, InputNumber, Modal, Select} from 'antd';
 
 export default class AssignmentForm extends React.Component {
   layout = {
@@ -41,7 +41,7 @@ export default class AssignmentForm extends React.Component {
             return (
               <div>
                 <Modal
-                  title={this.props.title + ' Assignment'}
+                  title={this.props.title}
                   visible={true}
                   footer={null}
                   confirmLoading={confirmLoading}
@@ -53,7 +53,7 @@ export default class AssignmentForm extends React.Component {
                     name="lesson"
                     onFinish={this.handleSubmit}
                     onFinishFailed={this.handleCancel}
-                    initialValues={this.props.assignment}
+                    initialValues={this.props.assignment || {state: 'open'} }
                   >
                     <Form.Item
                       label="Name:"
@@ -96,7 +96,6 @@ export default class AssignmentForm extends React.Component {
                       <Select
                         style={{width: '100%'}}
                         placeholder="Please select"
-                        defaultValue="open"
                       >
                         <Select.Option key="review" value="review">Review</Select.Option>
                         <Select.Option key="open" value="open">Open</Select.Option>
@@ -107,11 +106,12 @@ export default class AssignmentForm extends React.Component {
                       name="credits"
                       rules={[
                         {
+                          required: true,
                           message: 'Please input the amount of credits this assignment gives.',
                         },
                       ]}
                     >
-                      <Input/>
+                      <Input />
                     </Form.Item>
                     <Form.Item
                       label="Submission Date:"
@@ -184,7 +184,7 @@ export default class AssignmentForm extends React.Component {
                     </Form.Item>
                     <Form.Item {...this.tailLayout}>
                       <Button type="primary" htmlType="submit">
-                        {this.props.title}
+                        {this.props.submitTitle}
                       </Button>
                     </Form.Item>
                   </Form>

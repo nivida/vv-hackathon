@@ -45,7 +45,7 @@ const Edit = ({onEditSuccess, ...props}) => {
         Edit
       </Button>
       {(isVisible && assignment && students && materials && exercises) ?
-        <AssignmentForm title={'Edit Assignment'}
+        <AssignmentForm title={'Edit Assignment'} submitTitle={'Edit'}
                     onCancel={() => setIsVisible(false)}
                     onSubmit={handleSubmit}
                     assignment={initialValues}

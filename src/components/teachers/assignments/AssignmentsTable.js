@@ -1,16 +1,14 @@
 import * as React from "react";
 import {observer} from "mobx-react-lite";
-import {Button, Col, Input, Row, Table, Tag} from "antd";
+import {Col, Input, Row, Table, Tag} from "antd";
 import moment from "moment";
 import {datetimeFormat} from "../../../utils/dateFormats";
-import {EditOutlined, PlusOutlined} from "@ant-design/icons";
 import DeleteButton from "../../shared/DeleteButton";
 import {Link} from "react-router-dom";
 import {useContext} from "react";
 import {StoreContext} from "../../../repositories/rootRepo";
 import {useState} from "react";
 import {useEffect} from "react";
-import AssignmentForm from "./AssignmentForm.js";
 import Add from "./Add";
 import Edit from "../lessons/Edit";
 
@@ -90,7 +88,6 @@ const AssignmentsTable = (props) => {
           />
         </Col>
       </Row>
-      <AssignmentForm title="Add" />
       <Table style={{marginTop: 10}} columns={columns} rowKey={'id'} dataSource={assignments} bordered={false}/>
     </div>
   );
