@@ -1,6 +1,7 @@
 import * as React from "react";
-import {Card, Comment, List, Tooltip} from "antd";
+import {Button, Card, Comment, List, Tooltip} from "antd";
 import moment from "moment";
+import PhoneOutlined from "@ant-design/icons/es/icons/PhoneOutlined";
 
 const TeacherComments = (props) => {
   const data = [
@@ -58,7 +59,13 @@ const TeacherComments = (props) => {
 
   return (
     <Card style={{marginTop: '50px'}}>
+      <div style={{float: 'right', marginTop: '-5px'}}>
+        <Tooltip title="Request Call">
+          <Button type="primary" shape="circle" icon={<PhoneOutlined />} size="large" />
+        </Tooltip>
+      </div>
       <List
+        style={{marginTop: '20px'}}
         className="comment-list"
         header={`Teacher Feedback`}
         itemLayout="horizontal"
