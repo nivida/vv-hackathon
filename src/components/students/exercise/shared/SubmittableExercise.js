@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Button} from "antd";
 
-const SubmittableExercise = ({exercise, title, children, button = true}) => {
+const SubmittableExercise = ({exercise, title, children, button = true, onSubmit}) => {
   if (!exercise) return null;
 
   return (
@@ -10,7 +10,7 @@ const SubmittableExercise = ({exercise, title, children, button = true}) => {
       {children}
       {button && (
         <div style={{marginTop: 30}}>
-          <Button type={'primary'}>Submit</Button>
+          <Button type={'primary'} onClick={() => onSubmit && onSubmit()}>Submit</Button>
         </div>
       )}
     </div>
