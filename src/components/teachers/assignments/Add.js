@@ -11,6 +11,7 @@ const Add = ({onAddSuccess}) => {
   const [students, setStudents] = useState(null);
   const [materials, setMaterials] = useState(null);
   const [exercises, setExercises] = useState(null);
+  const [isVisible, setIsVisible] = useState(null);
 
   useEffect(() => {
     if (isVisible) {
@@ -35,7 +36,7 @@ const Add = ({onAddSuccess}) => {
     <Button type="primary" icon={<PlusOutlined/>} onClick={() => setIsVisible(true)}>
       Add
     </Button>
-    {isVisible ? <AssignmentForm title={'Add Lesson'}
+    {isVisible ? <AssignmentForm title={'Add Assignment'}
                              onCancel={() => setIsVisible(false)}
                              onSubmit={handleSubmit}
                              materials={materials}
