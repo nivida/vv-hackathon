@@ -11,13 +11,17 @@ import {StoreContext} from "../../../repositories/rootRepo";
 import {useState} from "react";
 import {useEffect} from "react";
 import AssignmentForm from "./AssignmentForm.js";
+import Add from "./Add";
+import Edit from "../lessons/Edit";
 
 const AssignmentsTable = (props) => {
   const store = useContext(StoreContext);
   const [assignments, setAssignments] = useState(null);
 
+  const loadData = () => {store.assignmentRepo.getByAuthor(store.authRepo.user.uid).then(setAssignments);};
+
   useEffect(() => {
-    store.assignmentRepo.getByAuthor(store.authRepo.user.uid).then(setAssignments);
+    loadData();
   }, []);
 
   const onDelete = (assignment) => {
@@ -63,8 +67,10 @@ const AssignmentsTable = (props) => {
       key: '',
       render: (text, record) => (
         <div>
-          <Button icon={<EditOutlined/>}>Edit</Button>
-          <DeleteButton onConfirm={onDelete}/>
+          <Edit assignment={record.id} onEditSuccess={loadData}/>
+          <DeleteButton onConfirm={() => {
+            store.assignmentRepo.delete(record.id).then(loadData)
+          }}/>
         </div>
       ),
     },
@@ -74,7 +80,7 @@ const AssignmentsTable = (props) => {
     <div>
       <Row type={'flex'} justify={'space-between'}>
         <Col>
-          <Button type={'primary'} icon={<PlusOutlined/>}>Add</Button>
+          <Add onAddSuccess={loadData}/>
         </Col>
         <Col>
           <Input.Search
