@@ -26,7 +26,7 @@ const Edit = ({onEditSuccess, ...props}) => {
 
   return (
     <div>
-      <Button type="primary" onClick={() => {
+      <Button type="primary" style={{width: '94px'}} onClick={() => {
         setIsVisible(true)
       }}>
         Edit
