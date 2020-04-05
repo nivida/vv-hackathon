@@ -10,7 +10,7 @@ It gives teachers the possibility to create learning materials, exercises, assig
 
 All the above-mentioned functionalities with the related code are MIT licensed and free to use. The goal would be to provide an open permissionless system for anyone and if possible free of charge. This project could get developed without any full time hires and could get transitioned into a real OpenSourceSoftware project with the required funding for the servers.
 
-## How I built it
+## How We built it
 
 We mostly focused on the client-side of the project and do currently use the Google Cloud. Behind the scene are a no-sql database and a simple authentication service. The whole project is written in JavaScript to be able to run it on close to every known device. Because of the clear abstraction from the client to the backend we have. We are able to move the current existing services to self-hosted swiss servers with ease. 
 
@@ -21,15 +21,15 @@ Techstack:
 - OAuth2
 - JavaScript 
 
-## Challenges I ran into
+## Challenges We ran into
 
 We first have planned to set up the complete backend on our own with Go, Docker, and CockroachDB but had to stop this because of the limited time and manpower we had. We then created quickly the services we need on the Google Cloud and started to connect the backend services with the browser-based client.
 
-## Accomplishments that I'm proud of
+## Accomplishments that We are proud of
 
 We achieved in a really small amount of time a nice looking UI, working backend, and had the possibility to use some great new browser APIs. We think we can be proud of the current UX/UI and management logic we have created in such a short amount of time.
 
-## What I learned
+## What We learned
 
 We learned this hackathon that we probably first should start with the UI of our project and stub data and to slowly integrate the backend instead of putting so many hours on the backend. Those hours are better spent on the UI/UX of our hackathon project.
 
