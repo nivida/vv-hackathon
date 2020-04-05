@@ -99,6 +99,7 @@ export default class AssignmentForm extends React.Component {
                       >
                         <Select.Option key="review" value="review">Review</Select.Option>
                         <Select.Option key="open" value="open">Open</Select.Option>
+                        <Select.Option key="closed" value="closed">Closed</Select.Option>
                       </Select>
                     </Form.Item>
                     <Form.Item
