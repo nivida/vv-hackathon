@@ -1,9 +1,10 @@
 import * as React from "react";
 import Content from "../shared/Content";
 import "./Dashboard.scss";
-import {Row, Statistic, Col, Card, Calendar, Badge, Tabs} from "antd";
+import {Row, Statistic, Col, Card, Calendar, Badge, Tabs, Typography} from "antd";
 import ArrowUpOutlined from "@ant-design/icons/es/icons/ArrowUpOutlined";
 import ArrowDownOutlined from "@ant-design/icons/es/icons/ArrowDownOutlined";
+import TeacherComments from "./TeacherComments";
 
 function getListData(value) {
   let listData;
@@ -123,9 +124,11 @@ const Dashboard = (props) => {
               </Card>
             </Col>
           </Row>
-          <div style={{marginTop: '50px'}}>
+          <TeacherComments />
+          <Card style={{marginTop: '50px'}}>
+            <Typography.Title level={4}>Overview</Typography.Title>
             <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender}/>
-          </div>
+          </Card>
         </Tabs.TabPane>
         <Tabs.TabPane tab="Selina" key="2">
           <Row gutter={16}>
@@ -180,7 +183,11 @@ const Dashboard = (props) => {
               </Card>
             </Col>
           </Row>
-          <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} style={{marginTop: '50px'}}/>
+          <TeacherComments />
+          <Card style={{marginTop: '50px'}}>
+            <Typography.Title level={2}>h2. Ant Design</Typography.Title>
+            <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender}/>
+          </Card>
         </Tabs.TabPane>
       </Tabs>
     </Content>
