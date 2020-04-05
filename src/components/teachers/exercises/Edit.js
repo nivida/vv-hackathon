@@ -1,23 +1,23 @@
 import {observer} from "mobx-react-lite";
 import * as React from "react";
-import MaterialForm from "./MaterialForm";
+import ExercisesForm from "./ExercisesForm";
 import {useContext, useEffect, useState} from "react";
 import {StoreContext} from "../../../repositories/rootRepo";
 import {Button, message} from "antd";
 
 const Edit = ({onEditSuccess, ...props}) => {
   const store = useContext(StoreContext);
-  const [material, setMaterial] = useState(null);
+  const [exercise, setExercise] = useState(null);
   const [isVisible, setIsVisible] = useState(null);
 
   useEffect(() => {
     if (isVisible) {
-      store.materialRepo.getById(props.material).then(setMaterial);
+      store.exerciseRepo.getById(props.exercise).then(setExercise);
     }
   }, [isVisible]);
 
   const handleSubmit = (values) => {
-    store.materialRepo.update(props.material, values).then((resp) => {
+    store.exerciseRepo.update(props.exercise, values).then((resp) => {
       setIsVisible(false);
       message.success('successfully updated material!');
       onEditSuccess && onEditSuccess(resp);
@@ -31,11 +31,11 @@ const Edit = ({onEditSuccess, ...props}) => {
       }}>
         Edit
       </Button>
-      {(isVisible && material) ?
-        <MaterialForm title={'Edit Material'} submitTitle={'Edit'}
-                      onCancel={() => setIsVisible(false)}
-                      onSubmit={handleSubmit}
-                      material={material ? material : null}/> : null}
+      {(isVisible && exercise) ?
+        <ExercisesForm title={'Edit Exercises'} submitTitle={'Edit'}
+                       onCancel={() => setIsVisible(false)}
+                       onSubmit={handleSubmit}
+                       exercise={exercise ? exercise : null}/> : null}
     </div>
   )
 };
