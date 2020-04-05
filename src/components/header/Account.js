@@ -1,10 +1,10 @@
-import {Avatar, Button, Dropdown, Menu} from "antd";
+import {Button, Dropdown, Menu} from "antd";
 import * as React from "react";
 import {useContext} from "react";
-import avatar from "./../../assets/images/avatar.png";
 import {LogoutOutlined} from "@ant-design/icons";
 import {StoreContext} from "../../repositories/rootRepo";
 import {observer} from "mobx-react-lite";
+import SettingFilled from "@ant-design/icons/es/icons/SettingFilled";
 
 const Account = (props) => {
 
@@ -18,9 +18,11 @@ const Account = (props) => {
 
   const menu = (
     <Menu className={'user-menu'} selectedKeys={[]}>
-      <Menu.Item key="logout" onClick={logout}>
-        <LogoutOutlined/>
-        Logout
+      <Menu.Item key="privacy">
+        Privacy
+      </Menu.Item>
+      <Menu.Item key="feedback">
+        Feedback
       </Menu.Item>
     </Menu>
   );
@@ -28,8 +30,13 @@ const Account = (props) => {
   return (
     <div>
       <Dropdown overlay={menu} trigger={['click']}>
-        <Button>Profile</Button>
+        <Button>
+          <SettingFilled />
+        </Button>
       </Dropdown>
+      <Button onClick={logout} style={{marginLeft: '10px'}}>
+        <LogoutOutlined />
+      </Button>
     </div>
 
   )
