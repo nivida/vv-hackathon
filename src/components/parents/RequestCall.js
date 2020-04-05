@@ -1,12 +1,12 @@
 import {observer} from "mobx-react-lite";
 import * as React from "react";
 import {useContext, useEffect, useState} from "react";
-import LessonForm from "./LessonForm";
-import {StoreContext} from "../../../repositories/rootRepo";
-import {Button, message} from "antd";
-import {PlusOutlined} from "@ant-design/icons";
+import {Button, message, Tooltip} from "antd";
+import RequestCallModal from "./RequestCallModal";
+import PhoneOutlined from "@ant-design/icons/es/icons/PhoneOutlined";
+import {StoreContext} from "../../repositories/rootRepo";
 
-const Add = ({onAddSuccess}) => {
+const RequestCall = ({onAddSuccess}) => {
   const store = useContext(StoreContext);
   const [assignments, setAssignments] = useState(null);
   const [students, setStudents] = useState(null);
@@ -23,9 +23,7 @@ const Add = ({onAddSuccess}) => {
     values.start = values.start.toDate().getTime();
     values.end = values.end.toDate().getTime();
     values.teacher = store.authRepo.user.uid;
-    console.log(values);
     store.lessonRepository.create(values).then((res) => {
-      console.log(res);
       setIsVisible(false);
       message.success('successfully added lesson!');
       onAddSuccess && onAddSuccess(res);
@@ -34,10 +32,12 @@ const Add = ({onAddSuccess}) => {
 
   return (
     <div>
-      <Button type="primary" icon={<PlusOutlined/>} onClick={() => setIsVisible(true)}>
-        Add
-      </Button>
-      {isVisible ? <LessonForm title={'Add Lesson'}
+      <div style={{float: 'right', marginTop: '-5px'}}>
+        <Tooltip title="Request Call">
+          <Button type="primary" shape="circle" icon={<PhoneOutlined />} size="large" onClick={() => setIsVisible(true)}/>
+        </Tooltip>
+      </div>
+      {isVisible ? <RequestCallModal
                                onCancel={() => setIsVisible(false)}
                                onSubmit={handleSubmit}
                                assignments={assignments}
@@ -46,4 +46,4 @@ const Add = ({onAddSuccess}) => {
   )
 };
 
-export default observer(Add);
+export default observer(RequestCall);
