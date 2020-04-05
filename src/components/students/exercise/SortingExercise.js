@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Button} from "antd";
 import ListSort from "../../shared/ListSort";
+import SubmittableExercise from "./shared/SubmittableExercise";
 
 const SortingExercise = ({exercise}) => {
   const items = exercise.choices.map((item, i) => {
@@ -14,8 +14,7 @@ const SortingExercise = ({exercise}) => {
   });
 
   return (
-    <div>
-      <h4>{exercise.question}</h4>
+    <SubmittableExercise exercise={exercise} title={exercise.question}>
       <div className={`list-sort-demo-wrapper`}>
         <div className={'list-sort-demo'}>
           <ListSort
@@ -26,11 +25,7 @@ const SortingExercise = ({exercise}) => {
           </ListSort>
         </div>
       </div>
-      {/*<SortableList items={exercise.choices} useDragHandle/>*/}
-      <div style={{marginTop: 30}}>
-        <Button type={'primary'}>Submit</Button>
-      </div>
-    </div>
+    </SubmittableExercise>
   )
 };
 

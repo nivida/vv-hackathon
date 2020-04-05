@@ -1,7 +1,9 @@
 import * as React from "react";
 import {ReactMic} from "react-mic";
 import "./AudioRecordForm.scss";
-import {Card, Button, Form} from "antd";
+import {Button, Form} from "antd";
+import SubmittableExercise from "./shared/SubmittableExercise";
+import {AudioOutlined} from "@ant-design/icons";
 
 export default class AudioRecordForm extends React.Component {
   layout = {
@@ -14,7 +16,7 @@ export default class AudioRecordForm extends React.Component {
   };
 
   tailLayout = {
-    wrapperCol: {offset: 8, span: 16},
+    // wrapperCol: {offset: 8, span: 16},
   };
 
   /**
@@ -23,7 +25,8 @@ export default class AudioRecordForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      record: false
+      record: false,
+      canSubmit: false,
     }
   }
 
@@ -35,37 +38,37 @@ export default class AudioRecordForm extends React.Component {
 
   handleSubmit() {
     this.setState({
-      record: false
+      record: false,
+      canSubmit: true
     });
   }
 
   render() {
     return (
-      <div className="site-card-border-less-wrapper">
-        <Card title="Audio Recording" bordered={false}>
-          <Form
-            {...this.layout}
-            name="audio-recording"
-            onFinish={this.handleSubmit.bind(this)}
-          >
-            <ReactMic
-              record={this.state.record}
-              className="sound-wave"
-              onStop={this.props.onStop}
-              onData={this.props.onData}
-              strokeColor="#fff"
-              backgroundColor="#049372"/>
-            <Form.Item {...this.tailLayout}>
-              <Button type="primary" onClick={this.start} style={{margin: '10px 8px 0 0'}}>
-                Start
-              </Button>
-              <Button type="primary" htmlType="submit" style={{ margin: '10px 0 0 0' }}>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </Card>
-      </div>
+      <SubmittableExercise exercise={this.props.exercise} button={this.state.canSubmit && !this.state.record}>
+        <Form
+          {...this.layout}
+          name="audio-recording"
+          onFinish={this.handleSubmit.bind(this)}
+        >
+          <ReactMic
+            record={this.state.record}
+            className="sound-wave"
+            onStop={this.props.onStop}
+            onData={this.props.onData}
+            strokeColor="#5901b8"
+            backgroundColor="#f0f2f5"/>
+          <Form.Item {...this.tailLayout}>
+            <Button icon={<AudioOutlined/>} disabled={this.state.record} type="primary" onClick={this.start}
+                    style={{margin: '10px 8px 0 0'}}>
+              Start
+            </Button>
+            <Button type={this.state.record ? 'primary' : 'default'} htmlType="submit" style={{margin: '10px 0 0 0'}}>
+              Stop
+            </Button>
+          </Form.Item>
+        </Form>
+      </SubmittableExercise>
     );
   }
 }
