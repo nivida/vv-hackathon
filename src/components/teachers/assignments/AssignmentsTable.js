@@ -10,7 +10,7 @@ import {StoreContext} from "../../../repositories/rootRepo";
 import {useState} from "react";
 import {useEffect} from "react";
 import Add from "./Add";
-import Edit from "../lessons/Edit";
+import Edit from "./Edit";
 
 const AssignmentsTable = (props) => {
   const store = useContext(StoreContext);
@@ -63,11 +63,11 @@ const AssignmentsTable = (props) => {
       title: '',
       align: 'right',
       key: '',
-      render: (text, record) => (
+      render: (text, assignment) => (
         <div>
-          <Edit assignment={record.id} onEditSuccess={loadData}/>
+          <Edit assignment={assignment.id} onEditSuccess={loadData}/>
           <DeleteButton onConfirm={() => {
-            store.assignmentRepo.delete(record.id).then(loadData)
+            store.assignmentRepo.delete(assignment.id).then(loadData)
           }}/>
         </div>
       ),

@@ -16,6 +16,9 @@ const Edit = ({onEditSuccess, ...props}) => {
 
   useEffect(() => {
     if (isVisible) {
+      console.log(props.assignment);
+
+
       store.assignmentRepo.getById(props.assignment).then(setAssignment);
       store.userRepo.getUsersByRole('student').then(setStudents);
       store.materialRepo.getAll().then(setMaterials);
@@ -27,7 +30,7 @@ const Edit = ({onEditSuccess, ...props}) => {
     values.deadline = values.deadline.toDate().getTime();
     store.assignmentRepo.update(props.assignment, values).then((resp) => {
       setIsVisible(false);
-      message.success('successfully updated lesson!');
+      message.success('successfully updated assignment!');
       onEditSuccess && onEditSuccess(resp);
     });
   };
